@@ -23,6 +23,9 @@
 
 #include <QString>
 
+//************************************ Misc *******************************************/
+static const QString PLUGIN_NAME = QString("OgamFileResourcePlugin");
+
 //************************************ Icons *******************************************/
 static const QString PLUGIN_ICON_PATH = QString("../common/icons/");
 static const QString PLUGIN_ICON_FOLDER = QString("folder.png");

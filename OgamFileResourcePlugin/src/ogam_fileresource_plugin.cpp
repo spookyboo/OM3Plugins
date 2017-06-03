@@ -1,5 +1,5 @@
-#include "ogam_fileresource_plugin.h"
 #include "file_resource_constants.h"
+#include "ogam_fileresource_plugin.h"
 #include "assets_dockwidget.h"
 #include <QHBoxLayout>
 #include <QMessageBox>
@@ -19,7 +19,10 @@ OgamFileResourcePlugin::OgamFileResourcePlugin (AssetsDockWidget* assetsDockWidg
 
     // Create DockWidgets in the main window
     mCentralDockWidget = new CentralDockWidget("Main", mInnerMain);
+    mCentralDockWidget->setPlugin(this); // Add reference to this plugin
     mFileExplorerDockWidget = new FileExplorerDockWidget("File system", mInnerMain);
+    mFileExplorerDockWidget->setPlugin(this); // Add reference to this plugin
+    mFileExplorerDockWidget->setCentralDockWidget(mCentralDockWidget); // Add reference to the central widget
     mInnerMain->addDockWidget(Qt::RightDockWidgetArea, mFileExplorerDockWidget);
     mInnerMain->setCentralWidget(mCentralDockWidget);
 }
@@ -49,4 +52,19 @@ void OgamFileResourcePlugin::shutdown (void)
 //****************************************************************************/
 void OgamFileResourcePlugin::uninstall (void)
 {
+}
+
+//****************************************************************************/
+void OgamFileResourcePlugin::resetWindowLayout (void)
+{
+    mCentralDockWidget->show();
+    mInnerMain->setCentralWidget(mCentralDockWidget);
+    mFileExplorerDockWidget->show();
+    mInnerMain->addDockWidget(Qt::RightDockWidgetArea, mFileExplorerDockWidget);
+}
+
+//****************************************************************************/
+void OgamFileResourcePlugin::addResource (const AssetMetaData& assetMetaData)
+{
+    // TODO
 }

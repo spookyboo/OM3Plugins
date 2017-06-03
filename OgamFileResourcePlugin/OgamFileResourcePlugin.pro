@@ -23,10 +23,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+
+# Add media_listwidget.cpp of Ogam project to prevent linking errors
 SOURCES +=\
     src/ogam_fileresource_plugin.cpp \
     src/central_dockwidget.cpp \
-    src/file_explorer_dockwidget.cpp
+    src/file_explorer_dockwidget.cpp \
+    "$$OGAMHOME/source/src/media_listwidget.cpp"
 
 HEADERS +=\
     header/ogam_fileresource_plugin.h \
@@ -52,9 +55,9 @@ CONFIG(release, debug|release):LIBS +=\
 #    INSTALLS += target
 #}
 
-Release:DESTDIR = "$$OGAMHOME/bin"
-Debug:DESTDIR = "$$OGAMHOME/bin"
 #Release:DESTDIR = ../OgamFileResourcePlugin/bin
 #Debug:DESTDIR = ../OgamFileResourcePlugin/bin
+Release:DESTDIR = "$$OGAMHOME/bin"
+Debug:DESTDIR = "$$OGAMHOME/bin"
 target.path = $$[QTDIR]/
 INSTALLS += target

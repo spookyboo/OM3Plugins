@@ -21,14 +21,33 @@
 // Include
 #include <QMessageBox>
 #include "central_dockwidget.h"
+#include "media_listwidget.h"
 
 //****************************************************************************/
 CentralDockWidget::CentralDockWidget (const QString& title, QMainWindow* parent, Qt::WindowFlags flags) :
-    QDockWidget (title, parent, flags)
+    QDockWidget (title, parent, flags),
+    mPlugin(0)
 {
+    QMainWindow* mInnerMain = new QMainWindow();
+    mMediaListWidget = new MediaListWidget ();
+    mInnerMain->setCentralWidget(mMediaListWidget);
+    setWidget(mInnerMain);
+    mMediaListWidget->showMaximized();
 }
 
 //****************************************************************************/
 CentralDockWidget::~CentralDockWidget (void)
 {
+}
+
+//****************************************************************************/
+void CentralDockWidget::setPlugin (PluginResourceInterface* plugin)
+{
+    mPlugin = plugin;
+}
+
+//****************************************************************************/
+void CentralDockWidget::addResource (const AssetMetaData& assetMetaData)
+{
+    mMediaListWidget->addResource (assetMetaData);
 }

@@ -20,12 +20,16 @@
 
 // Include
 #include <QMessageBox>
+#include <QFileDialog>
 #include "file_resource_constants.h"
 #include "file_explorer_dockwidget.h"
+#include "central_dockwidget.h"
 
 //****************************************************************************/
 FileExplorerDockWidget::FileExplorerDockWidget (const QString& title, QMainWindow* parent, Qt::WindowFlags flags) :
-    QDockWidget (title, parent, flags)
+    QDockWidget (title, parent, flags),
+    mPlugin(0),
+    mCentralDockWidget(0)
 {
     mResourceTreeWidget = new Magus::QtResourceTreeWidget (PLUGIN_ICON_PATH);
     mResourceTreeWidget->generateUniqueResourceId(); // Start with 0
@@ -62,6 +66,19 @@ FileExplorerDockWidget::~FileExplorerDockWidget (void)
 }
 
 //****************************************************************************/
+void FileExplorerDockWidget::setPlugin (PluginResourceInterface* plugin)
+{
+    mPlugin = plugin;
+}
+
+//****************************************************************************/
+void FileExplorerDockWidget::setCentralDockWidget (CentralDockWidget* widget)
+{
+    mCentralDockWidget = widget;
+}
+
+
+//****************************************************************************/
 void FileExplorerDockWidget::handleCustomContextMenuItemSelected (const QString& menuItemText, int resourceId)
 {
     if (menuItemText == PLUGIN_CONTEXT_MENU_ACTION_ADD_DIR)
@@ -77,5 +94,35 @@ void FileExplorerDockWidget::handleCustomContextMenuItemSelected (const QString&
 //****************************************************************************/
 void FileExplorerDockWidget::addDirectory (void)
 {
+    QString folder;
+    QFileDialog dialog;
+    dialog.setFileMode(QFileDialog::Directory);
+    if (dialog.exec())
+    {
+        QStringList names = dialog.selectedFiles();
+        folder = names.at(0);
+
+        // Scan through alle media files
+        QString fileName;
+        QString fullQualifiedFileNameOrReference;
+
+        QDirIterator dirIt(folder, QDirIterator::Subdirectories);
+        while (dirIt.hasNext())
+        {
+            dirIt.next();
+            if (QFileInfo(dirIt.filePath()).isFile())
+            {
+                // It is a file
+                fileName = dirIt.fileName();
+                fullQualifiedFileNameOrReference = folder + QString("/") + fileName;
+                AssetMetaData assetMetaData;
+                assetMetaData.origin = PLUGIN_NAME.toStdString();
+                assetMetaData.assetId = 0; // For now it has no meaning
+                assetMetaData.fullQualifiedFileNameOrReference = fullQualifiedFileNameOrReference.toStdString();
+                assetMetaData.tags.push_back("test");
+                mCentralDockWidget->addResource(assetMetaData);
+            }
+        }
+    }
 }
 

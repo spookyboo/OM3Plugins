@@ -26,6 +26,7 @@
 #include <QMessageBox>
 #include <QMainWindow>
 #include "tool_resourcetree_widget.h"
+#include "plugin_resource_interface.h"
 
 QT_BEGIN_NAMESPACE
 class QDockWidget;
@@ -34,6 +35,7 @@ QT_END_NAMESPACE
 /****************************************************************************
  This class represents a DockWidget
  ***************************************************************************/
+class CentralDockWidget;
 class FileExplorerDockWidget : public QDockWidget
 {
 	Q_OBJECT
@@ -41,6 +43,14 @@ class FileExplorerDockWidget : public QDockWidget
 	public:
         FileExplorerDockWidget(const QString& title, QMainWindow* parent, Qt::WindowFlags flags = 0);
         ~FileExplorerDockWidget(void);
+
+        /* Set the pointer to the plugin. This is used to communicate with the main Ogam application
+         */
+        void setPlugin (PluginResourceInterface* plugin);
+
+        /* Set the pointer to the central widget.
+         */
+        void setCentralDockWidget (CentralDockWidget* widget);
 
     private slots:
         void handleCustomContextMenuItemSelected(const QString& menuItemText, int resourceId);
@@ -50,6 +60,8 @@ class FileExplorerDockWidget : public QDockWidget
 
     private:
         Magus::QtResourceTreeWidget* mResourceTreeWidget;
+        PluginResourceInterface* mPlugin;
+        CentralDockWidget* mCentralDockWidget;
 };
 
 #endif

@@ -25,6 +25,7 @@
 #include <QAction>
 #include <QMessageBox>
 #include <QMainWindow>
+#include "plugin_resource_interface.h"
 
 QT_BEGIN_NAMESPACE
 class QDockWidget;
@@ -33,6 +34,8 @@ QT_END_NAMESPACE
 /****************************************************************************
  This class represents a DockWidget
  ***************************************************************************/
+class MediaListWidget;
+class AssetsDockWidget;
 class CentralDockWidget : public QDockWidget
 {
 	Q_OBJECT
@@ -41,8 +44,18 @@ class CentralDockWidget : public QDockWidget
         CentralDockWidget (const QString& title, QMainWindow* parent, Qt::WindowFlags flags = 0);
         ~CentralDockWidget (void);
 
-    //private:
-        //MainWindow* mParent;
+        /* Set the pointer to the plugin. This is used to communicate with the main Ogam application
+         */
+        void setPlugin (PluginResourceInterface* plugin);
+
+        /* Add a resource to this central widget. This results in showing a list of widgets containing
+         * an image, video, model, audio, etc.
+         */
+        void addResource (const AssetMetaData& assetMetaData);
+
+    private:
+        PluginResourceInterface* mPlugin;
+        MediaListWidget* mMediaListWidget;
 };
 
 #endif

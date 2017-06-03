@@ -50,6 +50,8 @@ class OGAM_FILERESOURCE_PLUGINSHARED_EXPORT OgamFileResourcePlugin : public Plug
         virtual void initialise (void);
         virtual void shutdown (void);
         virtual void uninstall (void);
+        virtual void resetWindowLayout (void);
+        virtual void addResource (const AssetMetaData& assetMetaData);
 
     private:
         AssetsDockWidget* mAssetsDockWidget;
