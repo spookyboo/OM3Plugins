@@ -20,6 +20,7 @@
 
 // Include
 #include <QMessageBox>
+#include "file_resource_constants.h"
 #include "central_dockwidget.h"
 #include "media_listwidget.h"
 
@@ -50,4 +51,10 @@ void CentralDockWidget::setPlugin (PluginResourceInterface* plugin)
 void CentralDockWidget::addResource (const AssetMetaData& assetMetaData)
 {
     mMediaListWidget->addResource (assetMetaData);
+}
+
+//****************************************************************************/
+void CentralDockWidget::removeResources (const QString& path)
+{
+    mMediaListWidget->removeResourcesByOriginAndPath(PLUGIN_NAME, path);
 }

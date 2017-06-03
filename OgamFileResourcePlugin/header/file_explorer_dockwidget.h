@@ -57,6 +57,7 @@ class FileExplorerDockWidget : public QDockWidget
 
     protected:
         void addDirectory (void);
+        void removeDirectory (int resourceId);
 
     private:
         Magus::QtResourceTreeWidget* mResourceTreeWidget;

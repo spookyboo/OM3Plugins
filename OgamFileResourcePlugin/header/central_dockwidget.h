@@ -44,14 +44,18 @@ class CentralDockWidget : public QDockWidget
         CentralDockWidget (const QString& title, QMainWindow* parent, Qt::WindowFlags flags = 0);
         ~CentralDockWidget (void);
 
-        /* Set the pointer to the plugin. This is used to communicate with the main Ogam application
+        /** Set the pointer to the plugin. This is used to communicate with the main Ogam application
          */
         void setPlugin (PluginResourceInterface* plugin);
 
-        /* Add a resource to this central widget. This results in showing a list of widgets containing
+        /** Add a resource to this central widget. This results in showing a list of widgets containing
          * an image, video, model, audio, etc.
          */
         void addResource (const AssetMetaData& assetMetaData);
+
+        /** Remove all resources belonging to a specific path
+         */
+        void removeResources (const QString& path);
 
     private:
         PluginResourceInterface* mPlugin;

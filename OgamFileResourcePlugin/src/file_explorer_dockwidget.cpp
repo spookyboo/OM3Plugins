@@ -87,7 +87,7 @@ void FileExplorerDockWidget::handleCustomContextMenuItemSelected (const QString&
     }
     else if (menuItemText == PLUGIN_CONTEXT_MENU_ACTION_REMOVE_DIR)
     {
-        mResourceTreeWidget->deleteResource(resourceId, true);
+        removeDirectory(resourceId);
     }
 }
 
@@ -101,12 +101,18 @@ void FileExplorerDockWidget::addDirectory (void)
     {
         QStringList names = dialog.selectedFiles();
         folder = names.at(0);
+        int id = mResourceTreeWidget->generateUniqueResourceId();
+        mResourceTreeWidget->addResource (0,
+                                          folder,
+                                          folder,
+                                          false,
+                                          true);
 
         // Scan through alle media files
         QString fileName;
         QString fullQualifiedFileNameOrReference;
 
-        QDirIterator dirIt(folder, QDirIterator::Subdirectories);
+        QDirIterator dirIt(folder, QDirIterator::NoIteratorFlags); // No subdirs
         while (dirIt.hasNext())
         {
             dirIt.next();
@@ -118,6 +124,8 @@ void FileExplorerDockWidget::addDirectory (void)
                 AssetMetaData assetMetaData;
                 assetMetaData.origin = PLUGIN_NAME.toStdString();
                 assetMetaData.assetId = 0; // For now it has no meaning
+                assetMetaData.baseNameOrReference = fileName.toStdString();
+                assetMetaData.path = folder.toStdString();
                 assetMetaData.fullQualifiedFileNameOrReference = fullQualifiedFileNameOrReference.toStdString();
                 assetMetaData.tags.push_back("test");
                 mCentralDockWidget->addResource(assetMetaData);
@@ -126,3 +134,16 @@ void FileExplorerDockWidget::addDirectory (void)
     }
 }
 
+//****************************************************************************/
+void FileExplorerDockWidget::removeDirectory (int resourceId)
+{
+    // Get the name of the item
+    QString name = mResourceTreeWidget->getResourceName(resourceId);
+    //QFileInfo info(name);
+
+    // Remove all items from the central widget
+    mCentralDockWidget->removeResources(name);
+
+    // Remove the directory from the resource tree
+    mResourceTreeWidget->deleteResource(resourceId, true);
+}
