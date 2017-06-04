@@ -33,7 +33,6 @@ QT_END_NAMESPACE
  This class represents a DockWidget
  ***************************************************************************/
 class MediaListWidget;
-class AssetsDockWidget;
 class CentralDockWidget : public QDockWidget
 {
 	Q_OBJECT

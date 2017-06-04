@@ -16,32 +16,30 @@
 **
 ****************************************************************************/
 
-#ifndef OGAM_FILERESOURCE_PLUGIN_H
-#define OGAM_FILERESOURCE_PLUGIN_H
+#ifndef OGAM_GITRESOURCE_PLUGIN_H
+#define OGAM_GITRESOURCE_PLUGIN_H
 
 #include <QtCore/qglobal.h>
 #include "plugin_resource_interface.h"
-#include "file_explorer_dockwidget.h"
-#include "central_dockwidget.h"
 
 // Define import/export
-#if defined(OGAM_FILERESOURCE_PLUGIN_LIBRARY)
-#  define FILERESOURCE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
+#if defined(OGAM_GITRESOURCE_PLUGIN_LIBRARY)
+#  define GITRESOURCE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
 #else
-#  define FILERESOURCE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
+#  define GITRESOURCE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-static const std::string FILE_RESOURCE_PLUGIN_NAME = "OgamFileResourcePlugin";
+static const std::string GIT_RESOURCE_PLUGIN_NAME = "OgamGitResourcePlugin";
 class AssetsDockWidget;
 /****************************************************************************
- The OgamFileResourcePlugin is an implementation of the PluginInterface and
- provides access to assets on a file system
+ The OgamGitResourcePlugin is an implementation of the PluginInterface and
+ provides access to assets in a Git repository
  ***************************************************************************/
-class FILERESOURCE_PLUGINSHARED_EXPORT OgamFileResourcePlugin : public PluginResourceInterface
+class GITRESOURCE_PLUGINSHARED_EXPORT OgamGitResourcePlugin : public PluginResourceInterface
 {
     public:
-        OgamFileResourcePlugin (AssetsDockWidget* assetsDockWidget);
-        virtual ~OgamFileResourcePlugin (void) {}
+        OgamGitResourcePlugin (AssetsDockWidget* assetsDockWidget);
+        virtual ~OgamGitResourcePlugin (void) {}
 
         virtual const std::string& getName (void) const;
         virtual void install (void);
@@ -55,28 +53,26 @@ class FILERESOURCE_PLUGINSHARED_EXPORT OgamFileResourcePlugin : public PluginRes
         AssetsDockWidget* mAssetsDockWidget;
         QWidget* mMainWidget;
         QMainWindow* mInnerMain;
-        CentralDockWidget* mCentralDockWidget;
-        FileExplorerDockWidget* mFileExplorerDockWidget;
 };
 
-static OgamFileResourcePlugin* plugin;
+static OgamGitResourcePlugin* plugin;
 
 /****************************************************************************
  Provide external access by the Ogam application:
- The function 'createPlugin' creates a static instance of OgamFileResourcePlugin
+ The function 'createPlugin' creates a static instance of OgamGitResourcePlugin
  and returns it's pointer
  ***************************************************************************/
-extern "C" FILERESOURCE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
+extern "C" GITRESOURCE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
 {
-    plugin = new OgamFileResourcePlugin(assetsDockWidget);
+    plugin = new OgamGitResourcePlugin(assetsDockWidget);
     return plugin;
 }
 
 /****************************************************************************
  Provide external access by the Ogam application:
- The function 'deletePlugin' deletes the static instance of OgamFileResourcePlugin
+ The function 'deletePlugin' deletes the static instance of OgamGitResourcePlugin
  ***************************************************************************/
-extern "C" FILERESOURCE_PLUGINSHARED_EXPORT void deletePlugin (void)
+extern "C" GITRESOURCE_PLUGINSHARED_EXPORT void deletePlugin (void)
 {
     delete plugin;
 }

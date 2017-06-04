@@ -16,67 +16,64 @@
 **
 ****************************************************************************/
 
-#ifndef OGAM_FILERESOURCE_PLUGIN_H
-#define OGAM_FILERESOURCE_PLUGIN_H
+#ifndef OGAM_MEDIAWIDGET_TEXTURE_PLUGIN_H
+#define OGAM_MEDIAWIDGET_TEXTURE_PLUGIN_H
 
 #include <QtCore/qglobal.h>
-#include "plugin_resource_interface.h"
-#include "file_explorer_dockwidget.h"
-#include "central_dockwidget.h"
+#include "plugin_media_widget_interface.h"
 
 // Define import/export
-#if defined(OGAM_FILERESOURCE_PLUGIN_LIBRARY)
-#  define FILERESOURCE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
+#if defined(OGAM_MEDIAWIDGET_TEXTURE_PLUGIN_LIBRARY)
+#  define MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
 #else
-#  define FILERESOURCE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
+#  define MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-static const std::string FILE_RESOURCE_PLUGIN_NAME = "OgamFileResourcePlugin";
+static const std::string MEDIAWIDGET_TEXTURE_PLUGIN_NAME = "OgamMediaWidgetTexturePlugin";
 class AssetsDockWidget;
 /****************************************************************************
- The OgamFileResourcePlugin is an implementation of the PluginInterface and
- provides access to assets on a file system
+ The OgamMediaWidgetTexturePlugin is an implementation of the
+ PluginMediaWidgetInterface and creates a MediaWidget, based on extension
+ of the asset.
  ***************************************************************************/
-class FILERESOURCE_PLUGINSHARED_EXPORT OgamFileResourcePlugin : public PluginResourceInterface
+class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OgamMediaWidgetTexturePlugin : public PluginMediaWidgetInterface
 {
     public:
-        OgamFileResourcePlugin (AssetsDockWidget* assetsDockWidget);
-        virtual ~OgamFileResourcePlugin (void) {}
+        OgamMediaWidgetTexturePlugin (AssetsDockWidget* assetsDockWidget);
+        virtual ~OgamMediaWidgetTexturePlugin (void) {}
 
         virtual const std::string& getName (void) const;
         virtual void install (void);
         virtual void initialise (void);
         virtual void shutdown (void);
         virtual void uninstall (void);
-        virtual void resetWindowLayout (void);
-        virtual MediaWidget* addResource (const AssetMetaData& assetMetaData);
+        virtual void resetWindowLayout (void) {}
+        virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData);
+        virtual const SupportedExtensions& getSupportedExtensions (void) const;
 
     private:
         AssetsDockWidget* mAssetsDockWidget;
-        QWidget* mMainWidget;
-        QMainWindow* mInnerMain;
-        CentralDockWidget* mCentralDockWidget;
-        FileExplorerDockWidget* mFileExplorerDockWidget;
+        SupportedExtensions mSupportedExtensions;
 };
 
-static OgamFileResourcePlugin* plugin;
+static OgamMediaWidgetTexturePlugin* plugin;
 
 /****************************************************************************
  Provide external access by the Ogam application:
- The function 'createPlugin' creates a static instance of OgamFileResourcePlugin
+ The function 'createPlugin' creates a static instance of OgamMediaWidgetTexturePlugin
  and returns it's pointer
  ***************************************************************************/
-extern "C" FILERESOURCE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
+extern "C" MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
 {
-    plugin = new OgamFileResourcePlugin(assetsDockWidget);
+    plugin = new OgamMediaWidgetTexturePlugin(assetsDockWidget);
     return plugin;
 }
 
 /****************************************************************************
  Provide external access by the Ogam application:
- The function 'deletePlugin' deletes the static instance of OgamFileResourcePlugin
+ The function 'deletePlugin' deletes the static instance of OgamMediaWidgetTexturePlugin
  ***************************************************************************/
-extern "C" FILERESOURCE_PLUGINSHARED_EXPORT void deletePlugin (void)
+extern "C" MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT void deletePlugin (void)
 {
     delete plugin;
 }

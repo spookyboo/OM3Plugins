@@ -19,6 +19,7 @@
 // Include
 #include <QMessageBox>
 #include <QFileDialog>
+#include <time.h>
 #include "file_resource_constants.h"
 #include "file_explorer_dockwidget.h"
 #include "central_dockwidget.h"
@@ -105,6 +106,7 @@ void FileExplorerDockWidget::addDirectory (void)
         mResourceTreeWidget->addResource (0,
                                           topLevelPath,
                                           topLevelPath,
+                                          PLUGIN_ICON_FOLDER,
                                           false,
                                           true);
 
@@ -112,6 +114,10 @@ void FileExplorerDockWidget::addDirectory (void)
         QString fileName;
         QString fullQualifiedFileNameOrReference;
 
+        /* Iterate through the items in the selected directory.
+         * Depending on the define in the project file, resources in subdirectories are
+         * included in the result.
+         */
         QDirIterator* dirIt;
 #ifdef PLUGIN_INCLUDE_SUBDIRS
         dirIt = new QDirIterator(topLevelPath, QDirIterator::Subdirectories);
@@ -126,16 +132,26 @@ void FileExplorerDockWidget::addDirectory (void)
             {
                 // It is a file
                 fileName = dirIt->fileName();
-                path = dirIt->fileInfo().absolutePath();
+                QFileInfo info = dirIt->fileInfo();
+                path = info.absolutePath();
                 fullQualifiedFileNameOrReference = path + QString("/") + fileName;
                 AssetMetaData assetMetaData;
                 assetMetaData.origin = PLUGIN_NAME.toStdString();
                 assetMetaData.assetId = 0; // For now it has no meaning
-                assetMetaData.baseNameOrReference = fileName.toStdString();
                 assetMetaData.topLevelPath = topLevelPath.toStdString();
                 assetMetaData.path = path.toStdString();
+                assetMetaData.baseNameOrReference = fileName.toStdString();
                 assetMetaData.fullQualifiedFileNameOrReference = fullQualifiedFileNameOrReference.toStdString();
                 assetMetaData.tags.push_back("test");
+                assetMetaData.extension = info.suffix().toStdString();
+                time_t rawTime = info.created().toTime_t();
+                assetMetaData.dateTimeAssetCreation = *gmtime(&rawTime);
+                rawTime = info.lastModified().toTime_t();
+                assetMetaData.dateTimeModified = *gmtime(&rawTime);
+                assetMetaData.byteSize = info.size();
+
+                // TODO: Other properties
+
                 mCentralDockWidget->addResource(assetMetaData);
             }
         }

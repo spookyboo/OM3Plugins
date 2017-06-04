@@ -1,0 +1,1 @@
+Copy these image files to the Ogam/commons/icons directory

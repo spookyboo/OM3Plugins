@@ -21,6 +21,7 @@
 #include "file_resource_constants.h"
 #include "central_dockwidget.h"
 #include "media_listwidget.h"
+#include "media_widget.h"
 
 //****************************************************************************/
 CentralDockWidget::CentralDockWidget (const QString& title, QMainWindow* parent, Qt::WindowFlags flags) :
@@ -48,11 +49,12 @@ void CentralDockWidget::setPlugin (PluginResourceInterface* plugin)
 //****************************************************************************/
 void CentralDockWidget::addResource (const AssetMetaData& assetMetaData)
 {
-    mMediaListWidget->addResource (assetMetaData);
+    MediaWidget* mediaWidget = mPlugin->addResource(assetMetaData);
+    mMediaListWidget->addMediaWidget(mediaWidget);
 }
 
 //****************************************************************************/
 void CentralDockWidget::removeResources (const QString& topLevelPath)
 {
-    mMediaListWidget->removeResourcesByOriginAndTopLevelPath(PLUGIN_NAME, topLevelPath);
+    mMediaListWidget->removeMediaWidgetsByOriginAndTopLevelPath(PLUGIN_NAME, topLevelPath);
 }
