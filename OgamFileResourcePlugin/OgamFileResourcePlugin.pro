@@ -10,7 +10,14 @@ OGAMHOME = "../../Ogam"
 TARGET = OgamFileResourcePlugin
 TEMPLATE = lib
 
+# Used in defining __declspec export/import
 DEFINES += OGAM_FILERESOURCE_PLUGIN_LIBRARY
+
+# Used to determine wether resourcs in subdirectories are included when a toplevel directory is selected.
+# Note, that in that case no directory tree is shown; all resources are associated with the toplevel directory
+# If PLUGIN_INCLUDE_SUBDIRS is defined, subdirs are included, otherwise only the resources that are part of the
+# toplevel directory are included
+DEFINES += PLUGIN_INCLUDE_SUBDIRS
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
