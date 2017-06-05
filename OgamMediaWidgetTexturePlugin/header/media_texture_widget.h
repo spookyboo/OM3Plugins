@@ -16,20 +16,24 @@
 **
 ****************************************************************************/
 
-#ifndef MEDIAWIDGET_TEXTURE_CONSTANTS_H
-#define MEDIAWIDGET_TEXTURE_CONSTANTS_H
+#ifndef MEDIA_TEXTURE_WIDGET_H
+#define MEDIA_TEXTURE_WIDGET_H
 
-#include <QString>
+#include <QPixmap>
+#include "media_widget.h"
 
-//************************************ Misc *******************************************/
-static const QString PLUGIN_NAME = QString("OgamMediaWidgetTexturePlugin");
-
-//************************************ Icons *******************************************/
-static const QString PLUGIN_ICON_PATH = QString("../common/icons/");
-static const QString PLUGIN_NO_IMAGE = QString("noImage.png");
-static const QString PLUGIN_3D_MODEL_DEFAULT = QString("3dmodel.png");
-static const QString PLUGIN_3D_MODEL_MAX = QString("max_icon.png");
-static const QString PLUGIN_3D_MODEL_OBJ = QString("obj_icon.png");
-static const QString PLUGIN_3D_MODEL_BLEND = QString("blend_icon.png");
+/****************************************************************************
+This MediaWidget is used to display image files. In addition it acts as a fallback
+for extensions of wellknown tools / fallback in case no other MediaWidget is
+able to display content
+***************************************************************************/
+class MediaTextureWidget : public MediaWidget
+{
+    public:
+        MediaTextureWidget (const AssetMetaData& assetMetaData,
+                            const QPixmap& pixmap,
+                            QWidget* parent = 0);
+        virtual ~MediaTextureWidget (void) {}
+};
 
 #endif

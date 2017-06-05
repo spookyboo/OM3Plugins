@@ -20,11 +20,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES +=\
-    src/ogam_media_widget_texture_plugin.cpp
+    src/ogam_media_widget_texture_plugin.cpp \
+    src/media_texture_widget.cpp
 
 HEADERS +=\
     header/ogam_media_widget_texture_plugin.h \
-    header/media_widget_texture_constants.h
+    header/media_widget_texture_constants.h \
+    header/media_texture_widget.h
 
 INCLUDEPATH +=\
     "../OgamMediaWidgetTexturePlugin/header/" \

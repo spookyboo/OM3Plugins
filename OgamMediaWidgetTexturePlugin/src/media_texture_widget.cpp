@@ -16,20 +16,24 @@
 **
 ****************************************************************************/
 
-#ifndef MEDIAWIDGET_TEXTURE_CONSTANTS_H
-#define MEDIAWIDGET_TEXTURE_CONSTANTS_H
+#include <QLabel>
+#include <QPixmap>
+#include <QImageReader>
+#include <QHBoxLayout>
+#include <QLineEdit>
+#include "media_texture_widget.h"
 
-#include <QString>
-
-//************************************ Misc *******************************************/
-static const QString PLUGIN_NAME = QString("OgamMediaWidgetTexturePlugin");
-
-//************************************ Icons *******************************************/
-static const QString PLUGIN_ICON_PATH = QString("../common/icons/");
-static const QString PLUGIN_NO_IMAGE = QString("noImage.png");
-static const QString PLUGIN_3D_MODEL_DEFAULT = QString("3dmodel.png");
-static const QString PLUGIN_3D_MODEL_MAX = QString("max_icon.png");
-static const QString PLUGIN_3D_MODEL_OBJ = QString("obj_icon.png");
-static const QString PLUGIN_3D_MODEL_BLEND = QString("blend_icon.png");
-
-#endif
+//****************************************************************************/
+MediaTextureWidget::MediaTextureWidget (const AssetMetaData& assetMetaData,
+                                        const QPixmap& pixmap,
+                                        QWidget* parent) :
+    MediaWidget(assetMetaData, parent)
+{
+    QLabel* label = new QLabel();
+    QHBoxLayout* layout = new QHBoxLayout;
+    label->setPixmap(pixmap);
+    label->setScaledContents(true);
+    layout->addWidget(label);
+    setLayout(layout);
+    setMouseTracking(true);
+}

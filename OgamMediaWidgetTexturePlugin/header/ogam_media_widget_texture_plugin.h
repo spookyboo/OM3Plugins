@@ -39,6 +39,7 @@ class AssetsDockWidget;
 class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OgamMediaWidgetTexturePlugin : public PluginMediaWidgetInterface
 {
     public:
+        typedef QMap <std::string, QString> FallbackIcons;
         OgamMediaWidgetTexturePlugin (AssetsDockWidget* assetsDockWidget);
         virtual ~OgamMediaWidgetTexturePlugin (void) {}
 
@@ -51,9 +52,22 @@ class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OgamMediaWidgetTexturePlugin : pub
         virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData);
         virtual const SupportedExtensions& getSupportedExtensions (void) const;
 
+    protected:
+        // Returns true if the extension is a supported texture
+        bool OgamMediaWidgetTexturePlugin::isSupportedTexture (const std::string& extension);
+
+        // Returns the filename of the icon, based on the extension
+        const QString& getFallbackIcon (const std::string& extension) const;
+
+        // Checks whether a file exists
+        bool fileExist(const QString& fileName);
+
     private:
         AssetsDockWidget* mAssetsDockWidget;
         SupportedExtensions mSupportedExtensions;
+        FallbackIcons mFallbackIcons;
+        SupportedExtensions mSupportedTextures;
+        QString mDummyQString;
 };
 
 static OgamMediaWidgetTexturePlugin* plugin;

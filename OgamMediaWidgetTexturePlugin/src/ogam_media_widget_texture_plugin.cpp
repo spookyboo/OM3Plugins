@@ -18,32 +18,48 @@
 
 #include <QLabel>
 #include <QPixmap>
+#include <QImageReader>
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QMessageBox>
 #include "assets_dockwidget.h"
 #include "media_widget_texture_constants.h"
+#include "media_texture_widget.h"
 #include "ogam_media_widget_texture_plugin.h"
 
 //****************************************************************************/
 OgamMediaWidgetTexturePlugin::OgamMediaWidgetTexturePlugin (AssetsDockWidget* assetsDockWidget) :
     mAssetsDockWidget(assetsDockWidget)
 {
-    mSupportedExtensions.push_back("default"); // This plugin creates a default MediaWidget when all other available plugins cannot create the MediaWidget
-    mSupportedExtensions.push_back("jpg");
-    mSupportedExtensions.push_back("jpeg");
-    mSupportedExtensions.push_back("gif");
-    mSupportedExtensions.push_back("ico");
-    mSupportedExtensions.push_back("svg");
-    mSupportedExtensions.push_back("tga");
-    mSupportedExtensions.push_back("tiff");
-    mSupportedExtensions.push_back("bmp");
-    mSupportedExtensions.push_back("webp");
+    mDummyQString = QString("");
 
-    // Default icons for major tools
+    // Define which TEXTURES are supported by this plugin; add them also to the supported extensions vector
+    mSupportedTextures.push_back("png");
+    mSupportedTextures.push_back("jpg");
+    mSupportedTextures.push_back("jpeg");
+    mSupportedTextures.push_back("gif");
+    mSupportedTextures.push_back("ico");
+    mSupportedTextures.push_back("svg");
+    mSupportedTextures.push_back("tga");
+    mSupportedTextures.push_back("tiff");
+    mSupportedTextures.push_back("bmp");
+    mSupportedTextures.push_back("webp");
+    mSupportedExtensions = mSupportedTextures;
+
+    // Add other extensions, to indicate that more extensions are supported (although this only results in displaying an icon)
+    mSupportedExtensions.push_back("default"); // This plugin creates a default MediaWidget when all other available plugins cannot create the MediaWidget
     mSupportedExtensions.push_back("max");
     mSupportedExtensions.push_back("fbx");
     mSupportedExtensions.push_back("3ds");
+    mSupportedExtensions.push_back("obj");
+    mSupportedExtensions.push_back("blend");
+
+    // Define fallback icons for non-texture extensions
+    mFallbackIcons["max"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_MAX;
+    mFallbackIcons["fbx"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_DEFAULT;
+    mFallbackIcons["3ds"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_DEFAULT;
+    mFallbackIcons["obj"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_OBJ;
+    mFallbackIcons["blend"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_BLEND;
 }
 
 //****************************************************************************/
@@ -75,27 +91,51 @@ void OgamMediaWidgetTexturePlugin::uninstall (void)
 //****************************************************************************/
 MediaWidget* OgamMediaWidgetTexturePlugin::createMediaWidget (const AssetMetaData& assetMetaData)
 {
-    // TODO: Create a subclass of MediaWidget, but use a MediaWidget for testing purposes
-    // TEST
-    MediaWidget* mediaWidget = new MediaWidget (assetMetaData);
+    QSize size(120, 120);
     QPixmap pixmap;
-    if (assetMetaData.extension == "max" ||
-        assetMetaData.extension == "fbx" ||
-        assetMetaData.extension == "3ds")
-        pixmap.load(PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_IMAGE);
+    QImage image;
+    if (isSupportedTexture (assetMetaData.extension))
+    {
+        // The extension refers to a texture, supported by this plugin, so display the texture
+        if (fileExist(assetMetaData.fullQualifiedFileNameOrReference.c_str()))
+        {
+            try
+            {
+                // Decrease the texture, otherwise it cannot be loaded by the pixmap
+                QImageReader reader(assetMetaData.fullQualifiedFileNameOrReference.c_str());
+                reader.setScaledSize(size); // Prevents from reading to much data in memory
+                image = reader.read();
+                pixmap.convertFromImage(image);
+            }
+            catch (QException e)
+            {
+                pixmap.load(PLUGIN_ICON_PATH + PLUGIN_NO_IMAGE);
+            }
+        }
+        else
+        {
+            pixmap.load(PLUGIN_ICON_PATH + PLUGIN_NO_IMAGE);
+        }
+    }
     else
-        pixmap.load(PLUGIN_ICON_PATH + PLUGIN_NO_IMAGE);
-    QLabel* label = new QLabel();
-    QHBoxLayout* layout = new QHBoxLayout;
-    label->setPixmap(pixmap);
-    label->setScaledContents(true);
-    layout->addWidget(label);
-    mediaWidget->setLayout(layout);
-    QSize size(100, 100);
-    mediaWidget->setMinimumSize(size);
-    mediaWidget->setMaximumSize(size);
-    mediaWidget->setMouseTracking(true);
-    return mediaWidget;
+    {
+        // It is a non-texture or an unsupported texture, so try to use a fallback icon
+        QString fileNameIcon = getFallbackIcon (assetMetaData.extension);
+        if (fileNameIcon == "")
+        {
+            // It is not supported at all, so use a default
+            pixmap.load(PLUGIN_ICON_PATH + PLUGIN_NO_IMAGE);
+        }
+        else
+        {
+            pixmap.load(fileNameIcon);
+        }
+    }
+
+    MediaTextureWidget* mediaTextureWidget = new MediaTextureWidget (assetMetaData, pixmap);
+    mediaTextureWidget->setMinimumSize(size);
+    mediaTextureWidget->setMaximumSize(size);
+    return mediaTextureWidget;
 }
 
 //****************************************************************************/
@@ -103,3 +143,38 @@ const PluginMediaWidgetInterface::SupportedExtensions& OgamMediaWidgetTexturePlu
 {
     return mSupportedExtensions;
 }
+
+//****************************************************************************/
+const QString& OgamMediaWidgetTexturePlugin::getFallbackIcon (const std::string& extension) const
+{
+    FallbackIcons::const_iterator it = mFallbackIcons.find(extension);
+    if (it != mFallbackIcons.end())
+    {
+        return it.value();
+    }
+
+    return mDummyQString;
+}
+
+//****************************************************************************/
+bool OgamMediaWidgetTexturePlugin::isSupportedTexture (const std::string& extension)
+{
+    SupportedExtensions::iterator it = mSupportedTextures.begin();
+    SupportedExtensions::iterator itEnd = mSupportedTextures.end();
+    while (it != itEnd)
+    {
+        if (extension == *it)
+            return true;
+
+        ++it;
+    }
+    return false;
+}
+
+//****************************************************************************/
+bool OgamMediaWidgetTexturePlugin::fileExist(const QString& fileName)
+{
+    QFileInfo checkFile(fileName);
+    return (checkFile.exists() && checkFile.isFile());
+}
+
