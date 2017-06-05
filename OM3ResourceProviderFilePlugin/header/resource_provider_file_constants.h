@@ -16,13 +16,13 @@
 **
 ****************************************************************************/
 
-#ifndef FILE_RESOURCE_CONSTANTS_H
-#define FILE_RESOURCE_CONSTANTS_H
+#ifndef RESOURCE_PROVIDER_FILE_CONSTANTS_H
+#define RESOURCE_PROVIDER_FILE_CONSTANTS_H
 
 #include <QString>
 
 //************************************ Misc *******************************************/
-static const QString PLUGIN_NAME = QString("OM3FileResourcePlugin");
+static const QString PLUGIN_NAME = QString("OM3ResourceProviderFilePlugin");
 
 //************************************ Icons *******************************************/
 static const QString PLUGIN_ICON_PATH = QString("../common/icons/");

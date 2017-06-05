@@ -23,7 +23,7 @@
 #include <QAction>
 #include <QMessageBox>
 #include <QMainWindow>
-#include "plugin_resource_interface.h"
+#include "plugin_resource_provider_interface.h"
 
 QT_BEGIN_NAMESPACE
 class QDockWidget;
@@ -43,7 +43,7 @@ class CentralDockWidget : public QDockWidget
 
         /** Set the pointer to the plugin. This is used to communicate with the main OM3 application
          */
-        void setPlugin (PluginResourceInterface* plugin);
+        void setPlugin (PluginResourceProviderInterface* plugin);
 
         /** Add a resource to this central widget. This results in showing a list of widgets containing
          * an image, video, model, audio, etc.
@@ -55,7 +55,7 @@ class CentralDockWidget : public QDockWidget
         void removeResources (const QString& path);
 
     private:
-        PluginResourceInterface* mPlugin;
+        PluginResourceProviderInterface* mPlugin;
         MediaListWidget* mMediaListWidget;
 };
 

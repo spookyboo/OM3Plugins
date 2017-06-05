@@ -18,7 +18,7 @@
 
 // Include
 #include <QMessageBox>
-#include "file_resource_constants.h"
+#include "resource_provider_file_constants.h"
 #include "central_dockwidget.h"
 #include "media_listwidget.h"
 #include "media_widget.h"
@@ -41,7 +41,7 @@ CentralDockWidget::~CentralDockWidget (void)
 }
 
 //****************************************************************************/
-void CentralDockWidget::setPlugin (PluginResourceInterface* plugin)
+void CentralDockWidget::setPlugin (PluginResourceProviderInterface* plugin)
 {
     mPlugin = plugin;
 }

@@ -16,32 +16,30 @@
 **
 ****************************************************************************/
 
-#ifndef OM3_FILERESOURCE_PLUGIN_H
-#define OM3_FILERESOURCE_PLUGIN_H
+#ifndef OM3_RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT_H
+#define OM3_RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT_H
 
 #include <QtCore/qglobal.h>
-#include "plugin_resource_interface.h"
-#include "file_explorer_dockwidget.h"
-#include "central_dockwidget.h"
+#include "plugin_resource_provider_interface.h"
 
 // Define import/export
-#if defined(OM3_FILERESOURCE_PLUGIN_LIBRARY)
-#  define FILERESOURCE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
+#if defined(OM3_RESOURCE_PROVIDER_GIT_PLUGIN_LIBRARY)
+#  define RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT Q_DECL_EXPORT
 #else
-#  define FILERESOURCE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
+#  define RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-static const std::string FILE_RESOURCE_PLUGIN_NAME = "OM3FileResourcePlugin";
+static const std::string RESOURCE_PROVIDER_GIT_PLUGIN_NAME = "OM3ResourceProviderGitPlugin";
 class AssetsDockWidget;
 /****************************************************************************
- The OM3FileResourcePlugin is an implementation of the PluginInterface and
- provides access to assets on a file system
+ The OM3ResourceProviderGitPlugin is an implementation of the PluginInterface and
+ provides access to assets in a Git repository
  ***************************************************************************/
-class FILERESOURCE_PLUGINSHARED_EXPORT OM3FileResourcePlugin : public PluginResourceInterface
+class RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT OM3ResourceProviderGitPlugin : public PluginResourceProviderInterface
 {
     public:
-        OM3FileResourcePlugin (AssetsDockWidget* assetsDockWidget);
-        virtual ~OM3FileResourcePlugin (void) {}
+        OM3ResourceProviderGitPlugin (AssetsDockWidget* assetsDockWidget);
+        virtual ~OM3ResourceProviderGitPlugin (void) {}
 
         virtual const std::string& getName (void) const;
         virtual void install (void);
@@ -55,28 +53,26 @@ class FILERESOURCE_PLUGINSHARED_EXPORT OM3FileResourcePlugin : public PluginReso
         AssetsDockWidget* mAssetsDockWidget;
         QWidget* mMainWidget;
         QMainWindow* mInnerMain;
-        CentralDockWidget* mCentralDockWidget;
-        FileExplorerDockWidget* mFileExplorerDockWidget;
 };
 
-static OM3FileResourcePlugin* plugin;
+static OM3ResourceProviderGitPlugin* plugin;
 
 /****************************************************************************
  Provide external access by the OM3 application:
- The function 'createPlugin' creates a static instance of OM3FileResourcePlugin
+ The function 'createPlugin' creates a static instance of OM3ResourceProviderGitPlugin
  and returns it's pointer
  ***************************************************************************/
-extern "C" FILERESOURCE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
+extern "C" RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
 {
-    plugin = new OM3FileResourcePlugin(assetsDockWidget);
+    plugin = new OM3ResourceProviderGitPlugin(assetsDockWidget);
     return plugin;
 }
 
 /****************************************************************************
  Provide external access by the OM3 application:
- The function 'deletePlugin' deletes the static instance of OM3FileResourcePlugin
+ The function 'deletePlugin' deletes the static instance of OM3ResourceProviderGitPlugin
  ***************************************************************************/
-extern "C" FILERESOURCE_PLUGINSHARED_EXPORT void deletePlugin (void)
+extern "C" RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT void deletePlugin (void)
 {
     delete plugin;
 }

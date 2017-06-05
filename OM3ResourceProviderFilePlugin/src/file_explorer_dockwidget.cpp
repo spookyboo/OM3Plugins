@@ -20,7 +20,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <time.h>
-#include "file_resource_constants.h"
+#include "resource_provider_file_constants.h"
 #include "file_explorer_dockwidget.h"
 #include "central_dockwidget.h"
 
@@ -65,7 +65,7 @@ FileExplorerDockWidget::~FileExplorerDockWidget (void)
 }
 
 //****************************************************************************/
-void FileExplorerDockWidget::setPlugin (PluginResourceInterface* plugin)
+void FileExplorerDockWidget::setPlugin (PluginResourceProviderInterface* plugin)
 {
     mPlugin = plugin;
 }

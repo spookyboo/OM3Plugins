@@ -16,13 +16,13 @@
 **
 ****************************************************************************/
 
-#ifndef GIT_RESOURCE_CONSTANTS_H
-#define GIT_RESOURCE_CONSTANTS_H
+#ifndef RESOURCE_PROVIDER_GIT_CONSTANTS_H
+#define RESOURCE_PROVIDER_GIT_CONSTANTS_H
 
 #include <QString>
 
 //************************************ Misc *******************************************/
-static const QString PLUGIN_NAME = QString("OM3GitResourcePlugin");
+static const QString PLUGIN_NAME = QString("OM3ResourceProviderGitPlugin");
 
 //************************************ Icons *******************************************/
 static const QString PLUGIN_ICON_PATH = QString("../common/icons/");

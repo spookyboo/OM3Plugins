@@ -16,14 +16,14 @@
 **
 ****************************************************************************/
 
+#include "resource_provider_file_constants.h"
+#include "OM3_resource_provider_file_plugin.h"
 #include "assets_dockwidget.h"
-#include "git_resource_constants.h"
-#include "OM3_gitresource_plugin.h"
 #include <QHBoxLayout>
 #include <QMessageBox>
 
 //****************************************************************************/
-OM3GitResourcePlugin::OM3GitResourcePlugin (AssetsDockWidget* assetsDockWidget) :
+OM3ResourceProviderFilePlugin::OM3ResourceProviderFilePlugin (AssetsDockWidget* assetsDockWidget) :
     mAssetsDockWidget(assetsDockWidget)
 {
     // Create the main widget that is added to the assetsDockWidget's tab
@@ -34,42 +34,55 @@ OM3GitResourcePlugin::OM3GitResourcePlugin (AssetsDockWidget* assetsDockWidget) 
     mInnerMain = new QMainWindow();
     mainLayout->addWidget(mInnerMain);
     mMainWidget->setLayout(mainLayout);
+
+    // Create DockWidgets in the main window
+    mCentralDockWidget = new CentralDockWidget("Main", mInnerMain);
+    mCentralDockWidget->setPlugin(this); // Add reference to this plugin
+    mFileExplorerDockWidget = new FileExplorerDockWidget("File system", mInnerMain);
+    mFileExplorerDockWidget->setPlugin(this); // Add reference to this plugin
+    mFileExplorerDockWidget->setCentralDockWidget(mCentralDockWidget); // Add reference to the central widget
+    mInnerMain->addDockWidget(Qt::RightDockWidgetArea, mFileExplorerDockWidget);
+    mInnerMain->setCentralWidget(mCentralDockWidget);
 }
 
 //****************************************************************************/
-const std::string& OM3GitResourcePlugin::getName (void) const
+const std::string& OM3ResourceProviderFilePlugin::getName (void) const
 {
-    return GIT_RESOURCE_PLUGIN_NAME;
+    return RESOURCE_PROVIDER_PLUGIN_FILE_NAME;
 }
 
 //****************************************************************************/
-void OM3GitResourcePlugin::install (void)
+void OM3ResourceProviderFilePlugin::install (void)
 {
-    mAssetsDockWidget->addWidget(mMainWidget, PLUGIN_ICON_PATH + PLUGIN_ICON_FOLDER, "Git");
+    mAssetsDockWidget->addWidget(mMainWidget, PLUGIN_ICON_PATH + PLUGIN_ICON_FOLDER, "Filesystem");
 }
 
 //****************************************************************************/
-void OM3GitResourcePlugin::initialise (void)
-{
-}
-
-//****************************************************************************/
-void OM3GitResourcePlugin::shutdown (void)
-{
-}
-
-//****************************************************************************/
-void OM3GitResourcePlugin::uninstall (void)
-{
-}
-
-//****************************************************************************/
-void OM3GitResourcePlugin::resetWindowLayout (void)
+void OM3ResourceProviderFilePlugin::initialise (void)
 {
 }
 
 //****************************************************************************/
-MediaWidget* OM3GitResourcePlugin::addResource (const AssetMetaData& assetMetaData)
+void OM3ResourceProviderFilePlugin::shutdown (void)
+{
+}
+
+//****************************************************************************/
+void OM3ResourceProviderFilePlugin::uninstall (void)
+{
+}
+
+//****************************************************************************/
+void OM3ResourceProviderFilePlugin::resetWindowLayout (void)
+{
+    mCentralDockWidget->show();
+    mInnerMain->setCentralWidget(mCentralDockWidget);
+    mFileExplorerDockWidget->show();
+    mInnerMain->addDockWidget(Qt::RightDockWidgetArea, mFileExplorerDockWidget);
+}
+
+//****************************************************************************/
+MediaWidget* OM3ResourceProviderFilePlugin::addResource (const AssetMetaData& assetMetaData)
 {
     return mAssetsDockWidget->createMediaWidget(assetMetaData);
 }
