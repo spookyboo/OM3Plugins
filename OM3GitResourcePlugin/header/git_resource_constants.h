@@ -22,7 +22,7 @@
 #include <QString>
 
 //************************************ Misc *******************************************/
-static const QString PLUGIN_NAME = QString("OgamGitResourcePlugin");
+static const QString PLUGIN_NAME = QString("OM3GitResourcePlugin");
 
 //************************************ Icons *******************************************/
 static const QString PLUGIN_ICON_PATH = QString("../common/icons/");

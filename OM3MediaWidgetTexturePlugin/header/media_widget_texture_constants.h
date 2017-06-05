@@ -22,14 +22,25 @@
 #include <QString>
 
 //************************************ Misc *******************************************/
-static const QString PLUGIN_NAME = QString("OgamMediaWidgetTexturePlugin");
+static const QString PLUGIN_NAME = QString("OM3MediaWidgetTexturePlugin");
 
 //************************************ Icons *******************************************/
 static const QString PLUGIN_ICON_PATH = QString("../common/icons/");
-static const QString PLUGIN_NO_IMAGE = QString("noImage.png");
-static const QString PLUGIN_3D_MODEL_DEFAULT = QString("3dmodel.png");
-static const QString PLUGIN_3D_MODEL_MAX = QString("max_icon.png");
-static const QString PLUGIN_3D_MODEL_OBJ = QString("obj_icon.png");
-static const QString PLUGIN_3D_MODEL_BLEND = QString("blend_icon.png");
+static const QString PLUGIN_ICON_NO_IMAGE = QString("noImage.png");
+
+//------------------------------------ Default icons ------------------------------------
+static const QString PLUGIN_ICON_AUDIO_DEFAULT = QString("icon_audio_default.png");
+static const QString PLUGIN_ICON_VIDEO_DEFAULT = QString("icon_video_default.png");
+static const QString PLUGIN_ICON_3D_MODEL_DEFAULT = QString("icon_3dmodel_default.png");
+static const QString PLUGIN_ICON_FONT_DEFAULT = QString("icon_font_default.png");
+static const QString PLUGIN_ICON_ASSET_DEFAULT = QString("icon_asset_default.png");
+
+//------------------------------------ Specific icons ------------------------------------
+static const QString PLUGIN_ICON_3D_MODEL_MAX = QString("icon_3dmodel_max.png");
+static const QString PLUGIN_ICON_3D_MODEL_MESH = QString("icon_3dmodel_mesh.png");
+static const QString PLUGIN_ICON_3D_MODEL_OBJ = QString("icon_3dmodel_obj.png");
+static const QString PLUGIN_ICON_3D_MODEL_BLEND = QString("icon_3dmodel_blend.png");
+static const QString PLUGIN_ICON_ZIP = QString("icon_zip.png");
+static const QString PLUGIN_ICON_7ZIP = QString("icon_7zip.png");
 
 #endif

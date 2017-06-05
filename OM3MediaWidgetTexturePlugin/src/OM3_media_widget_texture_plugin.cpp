@@ -25,10 +25,10 @@
 #include "assets_dockwidget.h"
 #include "media_widget_texture_constants.h"
 #include "media_texture_widget.h"
-#include "ogam_media_widget_texture_plugin.h"
+#include "OM3_media_widget_texture_plugin.h"
 
 //****************************************************************************/
-OgamMediaWidgetTexturePlugin::OgamMediaWidgetTexturePlugin (AssetsDockWidget* assetsDockWidget) :
+OM3MediaWidgetTexturePlugin::OM3MediaWidgetTexturePlugin (AssetsDockWidget* assetsDockWidget) :
     mAssetsDockWidget(assetsDockWidget)
 {
     mDummyQString = QString("");
@@ -46,50 +46,101 @@ OgamMediaWidgetTexturePlugin::OgamMediaWidgetTexturePlugin (AssetsDockWidget* as
     mSupportedTextures.push_back("webp");
     mSupportedExtensions = mSupportedTextures;
 
-    // Add other extensions, to indicate that more extensions are supported (although this only results in displaying an icon)
+    /* Add other extensions, to indicate that more extensions are supported (although this only results in displaying an icon)
+     * Include a reference to the fallback icon
+    */
     mSupportedExtensions.push_back("default"); // This plugin creates a default MediaWidget when all other available plugins cannot create the MediaWidget
-    mSupportedExtensions.push_back("max");
-    mSupportedExtensions.push_back("fbx");
-    mSupportedExtensions.push_back("3ds");
-    mSupportedExtensions.push_back("obj");
-    mSupportedExtensions.push_back("blend");
 
-    // Define fallback icons for non-texture extensions
-    mFallbackIcons["max"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_MAX;
-    mFallbackIcons["fbx"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_DEFAULT;
-    mFallbackIcons["3ds"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_DEFAULT;
-    mFallbackIcons["obj"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_OBJ;
-    mFallbackIcons["blend"] = PLUGIN_ICON_PATH + PLUGIN_3D_MODEL_BLEND;
+    // 3d Model formats
+    mSupportedExtensions.push_back("3ds"); // 3D studio (old)
+    mSupportedExtensions.push_back("blend"); // blender
+    mSupportedExtensions.push_back("dae"); // collada
+    mSupportedExtensions.push_back("fbx");
+    mSupportedExtensions.push_back("max");
+    mSupportedExtensions.push_back("mesh"); // Ogre3d
+    mSupportedExtensions.push_back("mtl");
+    mSupportedExtensions.push_back("obj"); // wavefront
+    mFallbackIcons["3ds"] = PLUGIN_ICON_PATH + PLUGIN_ICON_3D_MODEL_DEFAULT;
+    mFallbackIcons["blend"] = PLUGIN_ICON_PATH + PLUGIN_ICON_3D_MODEL_BLEND;
+    mFallbackIcons["dae"] = PLUGIN_ICON_PATH + PLUGIN_ICON_3D_MODEL_BLEND;
+    mFallbackIcons["fbx"] = PLUGIN_ICON_PATH + PLUGIN_ICON_3D_MODEL_DEFAULT;
+    mFallbackIcons["max"] = PLUGIN_ICON_PATH + PLUGIN_ICON_3D_MODEL_DEFAULT;
+    mFallbackIcons["mesh"] = PLUGIN_ICON_PATH + PLUGIN_ICON_3D_MODEL_MESH;
+    mFallbackIcons["mtl"] = PLUGIN_ICON_PATH + PLUGIN_ICON_3D_MODEL_MESH;
+    mFallbackIcons["obj"] = PLUGIN_ICON_PATH + PLUGIN_ICON_3D_MODEL_OBJ;
+
+    // Audio formats
+    mSupportedExtensions.push_back("aiff");
+    mSupportedExtensions.push_back("mp3");
+    mSupportedExtensions.push_back("ogg");
+    mSupportedExtensions.push_back("flac");
+    mSupportedExtensions.push_back("wav");
+    mSupportedExtensions.push_back("wma");
+    mFallbackIcons["aiff"] = PLUGIN_ICON_PATH + PLUGIN_ICON_AUDIO_DEFAULT;
+    mFallbackIcons["mp3"] = PLUGIN_ICON_PATH + PLUGIN_ICON_AUDIO_DEFAULT;
+    mFallbackIcons["ogg"] = PLUGIN_ICON_PATH + PLUGIN_ICON_AUDIO_DEFAULT;
+    mFallbackIcons["flac"] = PLUGIN_ICON_PATH + PLUGIN_ICON_AUDIO_DEFAULT;
+    mFallbackIcons["wav"] = PLUGIN_ICON_PATH + PLUGIN_ICON_AUDIO_DEFAULT;
+    mFallbackIcons["wma"] = PLUGIN_ICON_PATH + PLUGIN_ICON_AUDIO_DEFAULT;
+
+    // Video formats
+    mSupportedExtensions.push_back("avi");
+    mSupportedExtensions.push_back("flv");
+    mSupportedExtensions.push_back("mkv");
+    mSupportedExtensions.push_back("mp4");
+    mSupportedExtensions.push_back("mpg");
+    mSupportedExtensions.push_back("mov");
+    mSupportedExtensions.push_back("mts");
+    mSupportedExtensions.push_back("vob");
+    mSupportedExtensions.push_back("wmv");
+    mFallbackIcons["avi"] = PLUGIN_ICON_PATH + PLUGIN_ICON_VIDEO_DEFAULT;
+    mFallbackIcons["flv"] = PLUGIN_ICON_PATH + PLUGIN_ICON_VIDEO_DEFAULT;
+    mFallbackIcons["mkv"] = PLUGIN_ICON_PATH + PLUGIN_ICON_VIDEO_DEFAULT;
+    mFallbackIcons["mp4"] = PLUGIN_ICON_PATH + PLUGIN_ICON_VIDEO_DEFAULT;
+    mFallbackIcons["mpg"] = PLUGIN_ICON_PATH + PLUGIN_ICON_VIDEO_DEFAULT;
+    mFallbackIcons["mov"] = PLUGIN_ICON_PATH + PLUGIN_ICON_VIDEO_DEFAULT;
+    mFallbackIcons["mts"] = PLUGIN_ICON_PATH + PLUGIN_ICON_VIDEO_DEFAULT;
+    mFallbackIcons["vob"] = PLUGIN_ICON_PATH + PLUGIN_ICON_VIDEO_DEFAULT;
+    mFallbackIcons["wmv"] = PLUGIN_ICON_PATH + PLUGIN_ICON_VIDEO_DEFAULT;
+
+    // Fonts
+    mSupportedExtensions.push_back("ttf");
+    mFallbackIcons["ttf"] = PLUGIN_ICON_PATH + PLUGIN_ICON_FONT_DEFAULT;
+
+    // Non-media formats (sometimes used for media though)
+    mSupportedExtensions.push_back("zip");
+    mFallbackIcons["zip"] = PLUGIN_ICON_PATH + PLUGIN_ICON_ZIP;
+    mFallbackIcons["7z"] = PLUGIN_ICON_PATH + PLUGIN_ICON_7ZIP;
 }
 
 //****************************************************************************/
-const std::string& OgamMediaWidgetTexturePlugin::getName (void) const
+const std::string& OM3MediaWidgetTexturePlugin::getName (void) const
 {
     return MEDIAWIDGET_TEXTURE_PLUGIN_NAME;
 }
 
 //****************************************************************************/
-void OgamMediaWidgetTexturePlugin::install (void)
+void OM3MediaWidgetTexturePlugin::install (void)
 {
 }
 
 //****************************************************************************/
-void OgamMediaWidgetTexturePlugin::initialise (void)
+void OM3MediaWidgetTexturePlugin::initialise (void)
 {
 }
 
 //****************************************************************************/
-void OgamMediaWidgetTexturePlugin::shutdown (void)
+void OM3MediaWidgetTexturePlugin::shutdown (void)
 {
 }
 
 //****************************************************************************/
-void OgamMediaWidgetTexturePlugin::uninstall (void)
+void OM3MediaWidgetTexturePlugin::uninstall (void)
 {
 }
 
 //****************************************************************************/
-MediaWidget* OgamMediaWidgetTexturePlugin::createMediaWidget (const AssetMetaData& assetMetaData)
+MediaWidget* OM3MediaWidgetTexturePlugin::createMediaWidget (const AssetMetaData& assetMetaData)
 {
     QSize size(120, 120);
     QPixmap pixmap;
@@ -109,12 +160,12 @@ MediaWidget* OgamMediaWidgetTexturePlugin::createMediaWidget (const AssetMetaDat
             }
             catch (QException e)
             {
-                pixmap.load(PLUGIN_ICON_PATH + PLUGIN_NO_IMAGE);
+                pixmap.load(PLUGIN_ICON_PATH + PLUGIN_ICON_NO_IMAGE);
             }
         }
         else
         {
-            pixmap.load(PLUGIN_ICON_PATH + PLUGIN_NO_IMAGE);
+            pixmap.load(PLUGIN_ICON_PATH + PLUGIN_ICON_NO_IMAGE);
         }
     }
     else
@@ -124,7 +175,7 @@ MediaWidget* OgamMediaWidgetTexturePlugin::createMediaWidget (const AssetMetaDat
         if (fileNameIcon == "")
         {
             // It is not supported at all, so use a default
-            pixmap.load(PLUGIN_ICON_PATH + PLUGIN_NO_IMAGE);
+            pixmap.load(PLUGIN_ICON_PATH + PLUGIN_ICON_ASSET_DEFAULT);
         }
         else
         {
@@ -139,13 +190,13 @@ MediaWidget* OgamMediaWidgetTexturePlugin::createMediaWidget (const AssetMetaDat
 }
 
 //****************************************************************************/
-const PluginMediaWidgetInterface::SupportedExtensions& OgamMediaWidgetTexturePlugin::getSupportedExtensions (void) const
+const PluginMediaWidgetInterface::SupportedExtensions& OM3MediaWidgetTexturePlugin::getSupportedExtensions (void) const
 {
     return mSupportedExtensions;
 }
 
 //****************************************************************************/
-const QString& OgamMediaWidgetTexturePlugin::getFallbackIcon (const std::string& extension) const
+const QString& OM3MediaWidgetTexturePlugin::getFallbackIcon (const std::string& extension) const
 {
     FallbackIcons::const_iterator it = mFallbackIcons.find(extension);
     if (it != mFallbackIcons.end())
@@ -157,7 +208,7 @@ const QString& OgamMediaWidgetTexturePlugin::getFallbackIcon (const std::string&
 }
 
 //****************************************************************************/
-bool OgamMediaWidgetTexturePlugin::isSupportedTexture (const std::string& extension)
+bool OM3MediaWidgetTexturePlugin::isSupportedTexture (const std::string& extension)
 {
     SupportedExtensions::iterator it = mSupportedTextures.begin();
     SupportedExtensions::iterator itEnd = mSupportedTextures.end();
@@ -172,7 +223,7 @@ bool OgamMediaWidgetTexturePlugin::isSupportedTexture (const std::string& extens
 }
 
 //****************************************************************************/
-bool OgamMediaWidgetTexturePlugin::fileExist(const QString& fileName)
+bool OM3MediaWidgetTexturePlugin::fileExist(const QString& fileName)
 {
     QFileInfo checkFile(fileName);
     return (checkFile.exists() && checkFile.isFile());

@@ -1,11 +1,11 @@
 QT       += widgets opengl multimedia
-OGAMHOME = "../../Ogam"
+OM3HOME = "../../OM3"
 
-TARGET = OgamFileResourcePlugin
+TARGET = OM3FileResourcePlugin
 TEMPLATE = lib
 
 # Used in defining __declspec export/import
-DEFINES += OGAM_FILERESOURCE_PLUGIN_LIBRARY
+DEFINES += OM3_FILERESOURCE_PLUGIN_LIBRARY
 
 # Used to determine wether resourcs in subdirectories are included when a toplevel directory is selected.
 # Note, that in that case no directory tree is shown; all resources are associated with the toplevel directory
@@ -25,40 +25,40 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
-# Add media_listwidget.cpp of Ogam project to prevent linking errors
+# Add media_listwidget.cpp of OM3 project to prevent linking errors
 SOURCES +=\
-    src/ogam_fileresource_plugin.cpp \
     src/central_dockwidget.cpp \
     src/file_explorer_dockwidget.cpp \
-    "$$OGAMHOME/source/src/media_listwidget.cpp"
+    "$$OM3HOME/source/src/media_listwidget.cpp" \
+    src/OM3_fileresource_plugin.cpp
 
 HEADERS +=\
-    header/ogam_fileresource_plugin.h \
     header/central_dockwidget.h \
     header/file_explorer_dockwidget.h \
-    header/file_resource_constants.h
+    header/file_resource_constants.h \
+    header/OM3_fileresource_plugin.h
 
 INCLUDEPATH +=\
-    "../OgamFileResourcePlugin/header/" \
-    "$$OGAMHOME/source/header"
+    "../OM3FileResourcePlugin/header/" \
+    "$$OM3HOME/source/header"
 
-Debug:LIBS += -L"$$OGAMHOME/bin"
-Release:LIBS += -L"$$OGAMHOME/bin"
+Debug:LIBS += -L"$$OM3HOME/bin"
+Release:LIBS += -L"$$OM3HOME/bin"
 
 CONFIG(debug, debug|release):LIBS +=\
-        -lOgam
+        -lOM3
 
 CONFIG(release, debug|release):LIBS +=\
-        -lOgam
+        -lOM3
 
 #unix {
 #    target.path = /usr/lib
 #    INSTALLS += target
 #}
 
-#Release:DESTDIR = ../OgamFileResourcePlugin/bin
-#Debug:DESTDIR = ../OgamFileResourcePlugin/bin
-Release:DESTDIR = "$$OGAMHOME/bin"
-Debug:DESTDIR = "$$OGAMHOME/bin"
+#Release:DESTDIR = ../OM3FileResourcePlugin/bin
+#Debug:DESTDIR = ../OM3FileResourcePlugin/bin
+Release:DESTDIR = "$$OM3HOME/bin"
+Debug:DESTDIR = "$$OM3HOME/bin"
 target.path = $$[QTDIR]/
 INSTALLS += target

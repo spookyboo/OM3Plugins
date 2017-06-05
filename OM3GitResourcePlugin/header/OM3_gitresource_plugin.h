@@ -16,30 +16,30 @@
 **
 ****************************************************************************/
 
-#ifndef OGAM_GITRESOURCE_PLUGIN_H
-#define OGAM_GITRESOURCE_PLUGIN_H
+#ifndef OM3_GITRESOURCE_PLUGIN_H
+#define OM3_GITRESOURCE_PLUGIN_H
 
 #include <QtCore/qglobal.h>
 #include "plugin_resource_interface.h"
 
 // Define import/export
-#if defined(OGAM_GITRESOURCE_PLUGIN_LIBRARY)
+#if defined(OM3_GITRESOURCE_PLUGIN_LIBRARY)
 #  define GITRESOURCE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
 #else
 #  define GITRESOURCE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-static const std::string GIT_RESOURCE_PLUGIN_NAME = "OgamGitResourcePlugin";
+static const std::string GIT_RESOURCE_PLUGIN_NAME = "OM3GitResourcePlugin";
 class AssetsDockWidget;
 /****************************************************************************
- The OgamGitResourcePlugin is an implementation of the PluginInterface and
+ The OM3GitResourcePlugin is an implementation of the PluginInterface and
  provides access to assets in a Git repository
  ***************************************************************************/
-class GITRESOURCE_PLUGINSHARED_EXPORT OgamGitResourcePlugin : public PluginResourceInterface
+class GITRESOURCE_PLUGINSHARED_EXPORT OM3GitResourcePlugin : public PluginResourceInterface
 {
     public:
-        OgamGitResourcePlugin (AssetsDockWidget* assetsDockWidget);
-        virtual ~OgamGitResourcePlugin (void) {}
+        OM3GitResourcePlugin (AssetsDockWidget* assetsDockWidget);
+        virtual ~OM3GitResourcePlugin (void) {}
 
         virtual const std::string& getName (void) const;
         virtual void install (void);
@@ -55,22 +55,22 @@ class GITRESOURCE_PLUGINSHARED_EXPORT OgamGitResourcePlugin : public PluginResou
         QMainWindow* mInnerMain;
 };
 
-static OgamGitResourcePlugin* plugin;
+static OM3GitResourcePlugin* plugin;
 
 /****************************************************************************
- Provide external access by the Ogam application:
- The function 'createPlugin' creates a static instance of OgamGitResourcePlugin
+ Provide external access by the OM3 application:
+ The function 'createPlugin' creates a static instance of OM3GitResourcePlugin
  and returns it's pointer
  ***************************************************************************/
 extern "C" GITRESOURCE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
 {
-    plugin = new OgamGitResourcePlugin(assetsDockWidget);
+    plugin = new OM3GitResourcePlugin(assetsDockWidget);
     return plugin;
 }
 
 /****************************************************************************
- Provide external access by the Ogam application:
- The function 'deletePlugin' deletes the static instance of OgamGitResourcePlugin
+ Provide external access by the OM3 application:
+ The function 'deletePlugin' deletes the static instance of OM3GitResourcePlugin
  ***************************************************************************/
 extern "C" GITRESOURCE_PLUGINSHARED_EXPORT void deletePlugin (void)
 {

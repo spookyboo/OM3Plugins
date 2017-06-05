@@ -16,32 +16,32 @@
 **
 ****************************************************************************/
 
-#ifndef OGAM_MEDIAWIDGET_TEXTURE_PLUGIN_H
-#define OGAM_MEDIAWIDGET_TEXTURE_PLUGIN_H
+#ifndef OM3_MEDIAWIDGET_TEXTURE_PLUGIN_H
+#define OM3_MEDIAWIDGET_TEXTURE_PLUGIN_H
 
 #include <QtCore/qglobal.h>
 #include "plugin_media_widget_interface.h"
 
 // Define import/export
-#if defined(OGAM_MEDIAWIDGET_TEXTURE_PLUGIN_LIBRARY)
+#if defined(OM3_MEDIAWIDGET_TEXTURE_PLUGIN_LIBRARY)
 #  define MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
 #else
 #  define MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-static const std::string MEDIAWIDGET_TEXTURE_PLUGIN_NAME = "OgamMediaWidgetTexturePlugin";
+static const std::string MEDIAWIDGET_TEXTURE_PLUGIN_NAME = "OM3MediaWidgetTexturePlugin";
 class AssetsDockWidget;
 /****************************************************************************
- The OgamMediaWidgetTexturePlugin is an implementation of the
+ The OM3MediaWidgetTexturePlugin is an implementation of the
  PluginMediaWidgetInterface and creates a MediaWidget, based on extension
  of the asset.
  ***************************************************************************/
-class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OgamMediaWidgetTexturePlugin : public PluginMediaWidgetInterface
+class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OM3MediaWidgetTexturePlugin : public PluginMediaWidgetInterface
 {
     public:
         typedef QMap <std::string, QString> FallbackIcons;
-        OgamMediaWidgetTexturePlugin (AssetsDockWidget* assetsDockWidget);
-        virtual ~OgamMediaWidgetTexturePlugin (void) {}
+        OM3MediaWidgetTexturePlugin (AssetsDockWidget* assetsDockWidget);
+        virtual ~OM3MediaWidgetTexturePlugin (void) {}
 
         virtual const std::string& getName (void) const;
         virtual void install (void);
@@ -54,7 +54,7 @@ class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OgamMediaWidgetTexturePlugin : pub
 
     protected:
         // Returns true if the extension is a supported texture
-        bool OgamMediaWidgetTexturePlugin::isSupportedTexture (const std::string& extension);
+        bool OM3MediaWidgetTexturePlugin::isSupportedTexture (const std::string& extension);
 
         // Returns the filename of the icon, based on the extension
         const QString& getFallbackIcon (const std::string& extension) const;
@@ -70,22 +70,22 @@ class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OgamMediaWidgetTexturePlugin : pub
         QString mDummyQString;
 };
 
-static OgamMediaWidgetTexturePlugin* plugin;
+static OM3MediaWidgetTexturePlugin* plugin;
 
 /****************************************************************************
- Provide external access by the Ogam application:
- The function 'createPlugin' creates a static instance of OgamMediaWidgetTexturePlugin
+ Provide external access by the OM3 application:
+ The function 'createPlugin' creates a static instance of OM3MediaWidgetTexturePlugin
  and returns it's pointer
  ***************************************************************************/
 extern "C" MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
 {
-    plugin = new OgamMediaWidgetTexturePlugin(assetsDockWidget);
+    plugin = new OM3MediaWidgetTexturePlugin(assetsDockWidget);
     return plugin;
 }
 
 /****************************************************************************
- Provide external access by the Ogam application:
- The function 'deletePlugin' deletes the static instance of OgamMediaWidgetTexturePlugin
+ Provide external access by the OM3 application:
+ The function 'deletePlugin' deletes the static instance of OM3MediaWidgetTexturePlugin
  ***************************************************************************/
 extern "C" MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT void deletePlugin (void)
 {

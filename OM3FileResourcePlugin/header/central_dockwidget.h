@@ -41,7 +41,7 @@ class CentralDockWidget : public QDockWidget
         CentralDockWidget (const QString& title, QMainWindow* parent, Qt::WindowFlags flags = 0);
         ~CentralDockWidget (void);
 
-        /** Set the pointer to the plugin. This is used to communicate with the main Ogam application
+        /** Set the pointer to the plugin. This is used to communicate with the main OM3 application
          */
         void setPlugin (PluginResourceInterface* plugin);
 

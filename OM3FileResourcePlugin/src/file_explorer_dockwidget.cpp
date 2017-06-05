@@ -99,7 +99,9 @@ void FileExplorerDockWidget::addDirectory (void)
     dialog.setFileMode(QFileDialog::Directory);
     if (dialog.exec())
     {
-        QApplication::setOverrideCursor(Qt::WaitCursor);
+        //QApplication::setOverrideCursor(Qt::WaitCursor);
+        //setCursor(QCursor(Qt::WaitCursor));
+        //mCentralDockWidget->setCursor(QCursor(Qt::WaitCursor));
         QStringList names = dialog.selectedFiles();
         topLevelPath = names.at(0);
         path = topLevelPath;
@@ -158,8 +160,9 @@ void FileExplorerDockWidget::addDirectory (void)
         }
 
         delete dirIt;
-
-        QApplication::restoreOverrideCursor();
+        //QApplication::restoreOverrideCursor();
+        //mCentralDockWidget->setCursor(QCursor(Qt::ArrowCursor));
+        //setCursor(QCursor(Qt::ArrowCursor));
     }
 }
 

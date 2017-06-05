@@ -16,8 +16,8 @@
 **
 ****************************************************************************/
 
-#ifndef OGAM_FILERESOURCE_PLUGIN_H
-#define OGAM_FILERESOURCE_PLUGIN_H
+#ifndef OM3_FILERESOURCE_PLUGIN_H
+#define OM3_FILERESOURCE_PLUGIN_H
 
 #include <QtCore/qglobal.h>
 #include "plugin_resource_interface.h"
@@ -25,23 +25,23 @@
 #include "central_dockwidget.h"
 
 // Define import/export
-#if defined(OGAM_FILERESOURCE_PLUGIN_LIBRARY)
+#if defined(OM3_FILERESOURCE_PLUGIN_LIBRARY)
 #  define FILERESOURCE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
 #else
 #  define FILERESOURCE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-static const std::string FILE_RESOURCE_PLUGIN_NAME = "OgamFileResourcePlugin";
+static const std::string FILE_RESOURCE_PLUGIN_NAME = "OM3FileResourcePlugin";
 class AssetsDockWidget;
 /****************************************************************************
- The OgamFileResourcePlugin is an implementation of the PluginInterface and
+ The OM3FileResourcePlugin is an implementation of the PluginInterface and
  provides access to assets on a file system
  ***************************************************************************/
-class FILERESOURCE_PLUGINSHARED_EXPORT OgamFileResourcePlugin : public PluginResourceInterface
+class FILERESOURCE_PLUGINSHARED_EXPORT OM3FileResourcePlugin : public PluginResourceInterface
 {
     public:
-        OgamFileResourcePlugin (AssetsDockWidget* assetsDockWidget);
-        virtual ~OgamFileResourcePlugin (void) {}
+        OM3FileResourcePlugin (AssetsDockWidget* assetsDockWidget);
+        virtual ~OM3FileResourcePlugin (void) {}
 
         virtual const std::string& getName (void) const;
         virtual void install (void);
@@ -59,22 +59,22 @@ class FILERESOURCE_PLUGINSHARED_EXPORT OgamFileResourcePlugin : public PluginRes
         FileExplorerDockWidget* mFileExplorerDockWidget;
 };
 
-static OgamFileResourcePlugin* plugin;
+static OM3FileResourcePlugin* plugin;
 
 /****************************************************************************
- Provide external access by the Ogam application:
- The function 'createPlugin' creates a static instance of OgamFileResourcePlugin
+ Provide external access by the OM3 application:
+ The function 'createPlugin' creates a static instance of OM3FileResourcePlugin
  and returns it's pointer
  ***************************************************************************/
 extern "C" FILERESOURCE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
 {
-    plugin = new OgamFileResourcePlugin(assetsDockWidget);
+    plugin = new OM3FileResourcePlugin(assetsDockWidget);
     return plugin;
 }
 
 /****************************************************************************
- Provide external access by the Ogam application:
- The function 'deletePlugin' deletes the static instance of OgamFileResourcePlugin
+ Provide external access by the OM3 application:
+ The function 'deletePlugin' deletes the static instance of OM3FileResourcePlugin
  ***************************************************************************/
 extern "C" FILERESOURCE_PLUGINSHARED_EXPORT void deletePlugin (void)
 {
