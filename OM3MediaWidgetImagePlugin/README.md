@@ -1,7 +1,7 @@
 # OM3MediaWidgetImagePlugin  
-The OM3MediaWidgetImagePlugin is an OM3 plugin to create MediaWidgets to display images (for example in the Workbench). 
+The OM3MediaWidgetImagePlugin is an OM3 plugin to create a MediaWidget, which displays an image (for example in the Workbench). 
 Based on the extension of an asset, the OM3 application determines which plugin is used to create the MediaWidget. 
-This plugin also is used as a fallback, in case no specialized plugin is available. Therefore it is considered a mandatory OM3 plugin.  
+This plugin is also used as a fallback, in case no specialized plugin is available. Therefore it is considered a mandatory OM3 plugin.  
   
 **Installation:**  
 - Compile the project using Qt Creator (or Visual Studio). Notice that Linux is not supported out of the box.  
