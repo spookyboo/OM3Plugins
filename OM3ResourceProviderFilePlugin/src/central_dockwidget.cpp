@@ -49,7 +49,7 @@ void CentralDockWidget::setPlugin (PluginResourceProviderInterface* plugin)
 //****************************************************************************/
 void CentralDockWidget::addResource (const AssetMetaData& assetMetaData)
 {
-    MediaWidget* mediaWidget = mPlugin->addResource(assetMetaData);
+    MediaWidget* mediaWidget = mPlugin->createMediaWidget(assetMetaData);
     mMediaListWidget->addMediaWidget(mediaWidget);
 }
 

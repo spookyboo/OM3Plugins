@@ -45,7 +45,7 @@ const std::string& OM3ResourceProviderGitPlugin::getName (void) const
 //****************************************************************************/
 void OM3ResourceProviderGitPlugin::install (void)
 {
-    mAssetsDockWidget->addWidget(mMainWidget, PLUGIN_ICON_PATH + PLUGIN_ICON_FOLDER, "Git");
+    mAssetsDockWidget->addResourceProviderWidget(mMainWidget, PLUGIN_ICON_PATH + PLUGIN_ICON_FOLDER, "Git");
 }
 
 //****************************************************************************/
@@ -69,7 +69,7 @@ void OM3ResourceProviderGitPlugin::resetWindowLayout (void)
 }
 
 //****************************************************************************/
-MediaWidget* OM3ResourceProviderGitPlugin::addResource (const AssetMetaData& assetMetaData)
+MediaWidget* OM3ResourceProviderGitPlugin::createMediaWidget (const AssetMetaData& assetMetaData)
 {
     return mAssetsDockWidget->createMediaWidget(assetMetaData);
 }

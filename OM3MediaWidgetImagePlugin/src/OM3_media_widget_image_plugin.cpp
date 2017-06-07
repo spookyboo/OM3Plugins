@@ -23,28 +23,28 @@
 #include <QLineEdit>
 #include <QMessageBox>
 #include "assets_dockwidget.h"
-#include "media_widget_texture_constants.h"
-#include "media_texture_widget.h"
-#include "OM3_media_widget_texture_plugin.h"
+#include "media_widget_image_constants.h"
+#include "media_image_widget.h"
+#include "OM3_media_widget_image_plugin.h"
 
 //****************************************************************************/
-OM3MediaWidgetTexturePlugin::OM3MediaWidgetTexturePlugin (AssetsDockWidget* assetsDockWidget) :
+OM3MediaWidgetImagePlugin::OM3MediaWidgetImagePlugin (AssetsDockWidget* assetsDockWidget) :
     mAssetsDockWidget(assetsDockWidget)
 {
     mDummyQString = QString("");
 
-    // Define which TEXTURES are supported by this plugin; add them also to the supported extensions vector
-    mSupportedTextures.push_back("png");
-    mSupportedTextures.push_back("jpg");
-    mSupportedTextures.push_back("jpeg");
-    mSupportedTextures.push_back("gif");
-    mSupportedTextures.push_back("ico");
-    mSupportedTextures.push_back("svg");
-    mSupportedTextures.push_back("tga");
-    mSupportedTextures.push_back("tiff");
-    mSupportedTextures.push_back("bmp");
-    mSupportedTextures.push_back("webp");
-    mSupportedExtensions = mSupportedTextures;
+    // Define which IMAGES are supported by this plugin; add them also to the supported extensions vector
+    mSupportedImages.push_back("png");
+    mSupportedImages.push_back("jpg");
+    mSupportedImages.push_back("jpeg");
+    mSupportedImages.push_back("gif");
+    mSupportedImages.push_back("ico");
+    mSupportedImages.push_back("svg");
+    mSupportedImages.push_back("tga");
+    mSupportedImages.push_back("tiff");
+    mSupportedImages.push_back("bmp");
+    mSupportedImages.push_back("webp");
+    mSupportedExtensions = mSupportedImages;
 
     /* Add other extensions, to indicate that more extensions are supported (although this only results in displaying an icon)
      * Include a reference to the fallback icon
@@ -114,46 +114,46 @@ OM3MediaWidgetTexturePlugin::OM3MediaWidgetTexturePlugin (AssetsDockWidget* asse
 }
 
 //****************************************************************************/
-const std::string& OM3MediaWidgetTexturePlugin::getName (void) const
+const std::string& OM3MediaWidgetImagePlugin::getName (void) const
 {
-    return MEDIAWIDGET_TEXTURE_PLUGIN_NAME;
+    return MEDIAWIDGET_IMAGE_PLUGIN_NAME;
 }
 
 //****************************************************************************/
-void OM3MediaWidgetTexturePlugin::install (void)
-{
-}
-
-//****************************************************************************/
-void OM3MediaWidgetTexturePlugin::initialise (void)
+void OM3MediaWidgetImagePlugin::install (void)
 {
 }
 
 //****************************************************************************/
-void OM3MediaWidgetTexturePlugin::shutdown (void)
+void OM3MediaWidgetImagePlugin::initialise (void)
 {
 }
 
 //****************************************************************************/
-void OM3MediaWidgetTexturePlugin::uninstall (void)
+void OM3MediaWidgetImagePlugin::shutdown (void)
 {
 }
 
 //****************************************************************************/
-MediaWidget* OM3MediaWidgetTexturePlugin::createMediaWidget (const AssetMetaData& assetMetaData)
+void OM3MediaWidgetImagePlugin::uninstall (void)
+{
+}
+
+//****************************************************************************/
+MediaWidget* OM3MediaWidgetImagePlugin::createMediaWidget (const AssetMetaData& assetMetaData)
 {
     QSize size(120, 120);
     QPixmap pixmap;
     QImage image;
-    if (isSupportedTexture (assetMetaData.extension))
+    if (isSupportedImage (assetMetaData.extension))
     {
-        // The extension refers to a texture, supported by this plugin, so display the texture
-        if (fileExist(assetMetaData.fullQualifiedFileNameOrReference.c_str()))
+        // The extension refers to a image, supported by this plugin, so display the image
+        if (fileExist(assetMetaData.fullQualifiedFileNameImport.c_str()))
         {
             try
             {
-                // Decrease the texture, otherwise it cannot be loaded by the pixmap
-                QImageReader reader(assetMetaData.fullQualifiedFileNameOrReference.c_str());
+                // Decrease the image, otherwise it cannot be loaded by the pixmap
+                QImageReader reader(assetMetaData.fullQualifiedFileNameImport.c_str());
                 reader.setScaledSize(size); // Prevents from reading to much data in memory
                 image = reader.read();
                 pixmap.convertFromImage(image);
@@ -170,7 +170,7 @@ MediaWidget* OM3MediaWidgetTexturePlugin::createMediaWidget (const AssetMetaData
     }
     else
     {
-        // It is a non-texture or an unsupported texture, so try to use a fallback icon
+        // It is a non-image or an unsupported image, so try to use a fallback icon
         QString fileNameIcon = getFallbackIcon (assetMetaData.extension);
         if (fileNameIcon == "")
         {
@@ -183,20 +183,20 @@ MediaWidget* OM3MediaWidgetTexturePlugin::createMediaWidget (const AssetMetaData
         }
     }
 
-    MediaTextureWidget* mediaTextureWidget = new MediaTextureWidget (assetMetaData, pixmap);
-    mediaTextureWidget->setMinimumSize(size);
-    mediaTextureWidget->setMaximumSize(size);
-    return mediaTextureWidget;
+    MediaImageWidget* mediaImageWidget = new MediaImageWidget (assetMetaData, pixmap);
+    mediaImageWidget->setMinimumSize(size);
+    mediaImageWidget->setMaximumSize(size);
+    return mediaImageWidget;
 }
 
 //****************************************************************************/
-const PluginMediaWidgetInterface::SupportedExtensions& OM3MediaWidgetTexturePlugin::getSupportedExtensions (void) const
+const PluginMediaWidgetInterface::SupportedExtensions& OM3MediaWidgetImagePlugin::getSupportedExtensions (void) const
 {
     return mSupportedExtensions;
 }
 
 //****************************************************************************/
-const QString& OM3MediaWidgetTexturePlugin::getFallbackIcon (const std::string& extension) const
+const QString& OM3MediaWidgetImagePlugin::getFallbackIcon (const std::string& extension) const
 {
     FallbackIcons::const_iterator it = mFallbackIcons.find(extension);
     if (it != mFallbackIcons.end())
@@ -208,10 +208,10 @@ const QString& OM3MediaWidgetTexturePlugin::getFallbackIcon (const std::string& 
 }
 
 //****************************************************************************/
-bool OM3MediaWidgetTexturePlugin::isSupportedTexture (const std::string& extension)
+bool OM3MediaWidgetImagePlugin::isSupportedImage (const std::string& extension)
 {
-    SupportedExtensions::iterator it = mSupportedTextures.begin();
-    SupportedExtensions::iterator itEnd = mSupportedTextures.end();
+    SupportedExtensions::iterator it = mSupportedImages.begin();
+    SupportedExtensions::iterator itEnd = mSupportedImages.end();
     while (it != itEnd)
     {
         if (extension == *it)
@@ -223,7 +223,7 @@ bool OM3MediaWidgetTexturePlugin::isSupportedTexture (const std::string& extensi
 }
 
 //****************************************************************************/
-bool OM3MediaWidgetTexturePlugin::fileExist(const QString& fileName)
+bool OM3MediaWidgetImagePlugin::fileExist(const QString& fileName)
 {
     QFileInfo checkFile(fileName);
     return (checkFile.exists() && checkFile.isFile());

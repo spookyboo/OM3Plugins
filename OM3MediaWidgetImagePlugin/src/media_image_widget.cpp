@@ -21,10 +21,10 @@
 #include <QImageReader>
 #include <QHBoxLayout>
 #include <QLineEdit>
-#include "media_texture_widget.h"
+#include "media_image_widget.h"
 
 //****************************************************************************/
-MediaTextureWidget::MediaTextureWidget (const AssetMetaData& assetMetaData,
+MediaImageWidget::MediaImageWidget (const AssetMetaData& assetMetaData,
                                         const QPixmap& pixmap,
                                         QWidget* parent) :
     MediaWidget(assetMetaData, parent)

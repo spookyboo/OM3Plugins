@@ -16,8 +16,8 @@
 **
 ****************************************************************************/
 
-#ifndef MEDIA_TEXTURE_WIDGET_H
-#define MEDIA_TEXTURE_WIDGET_H
+#ifndef MEDIA_IMAGE_WIDGET_H
+#define MEDIA_IMAGE_WIDGET_H
 
 #include <QPixmap>
 #include "media_widget.h"
@@ -27,13 +27,13 @@ This MediaWidget is used to display image files. In addition it acts as a fallba
 for extensions of wellknown tools / fallback in case no other MediaWidget is
 able to display content
 ***************************************************************************/
-class MediaTextureWidget : public MediaWidget
+class MediaImageWidget : public MediaWidget
 {
     public:
-        MediaTextureWidget (const AssetMetaData& assetMetaData,
+        MediaImageWidget (const AssetMetaData& assetMetaData,
                             const QPixmap& pixmap,
                             QWidget* parent = 0);
-        virtual ~MediaTextureWidget (void) {}
+        virtual ~MediaImageWidget (void) {}
 };
 
 #endif

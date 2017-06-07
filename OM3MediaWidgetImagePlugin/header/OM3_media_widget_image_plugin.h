@@ -16,32 +16,32 @@
 **
 ****************************************************************************/
 
-#ifndef OM3_MEDIAWIDGET_TEXTURE_PLUGIN_H
-#define OM3_MEDIAWIDGET_TEXTURE_PLUGIN_H
+#ifndef OM3_MEDIAWIDGET_IMAGE_PLUGIN_H
+#define OM3_MEDIAWIDGET_IMAGE_PLUGIN_H
 
 #include <QtCore/qglobal.h>
 #include "plugin_media_widget_interface.h"
 
 // Define import/export
-#if defined(OM3_MEDIAWIDGET_TEXTURE_PLUGIN_LIBRARY)
-#  define MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
+#if defined(OM3_MEDIAWIDGET_IMAGE_PLUGIN_LIBRARY)
+#  define MEDIAWIDGET_IMAGE_PLUGINSHARED_EXPORT Q_DECL_EXPORT
 #else
-#  define MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
+#  define MEDIAWIDGET_IMAGE_PLUGINSHARED_EXPORT Q_DECL_IMPORT
 #endif
 
-static const std::string MEDIAWIDGET_TEXTURE_PLUGIN_NAME = "OM3MediaWidgetTexturePlugin";
+static const std::string MEDIAWIDGET_IMAGE_PLUGIN_NAME = "OM3MediaWidgetImagePlugin";
 class AssetsDockWidget;
 /****************************************************************************
- The OM3MediaWidgetTexturePlugin is an implementation of the
+ The OM3MediaWidgetImagePlugin is an implementation of the
  PluginMediaWidgetInterface and creates a MediaWidget, based on extension
  of the asset.
  ***************************************************************************/
-class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OM3MediaWidgetTexturePlugin : public PluginMediaWidgetInterface
+class MEDIAWIDGET_IMAGE_PLUGINSHARED_EXPORT OM3MediaWidgetImagePlugin : public PluginMediaWidgetInterface
 {
     public:
         typedef QMap <std::string, QString> FallbackIcons;
-        OM3MediaWidgetTexturePlugin (AssetsDockWidget* assetsDockWidget);
-        virtual ~OM3MediaWidgetTexturePlugin (void) {}
+        OM3MediaWidgetImagePlugin (AssetsDockWidget* assetsDockWidget);
+        virtual ~OM3MediaWidgetImagePlugin (void) {}
 
         virtual const std::string& getName (void) const;
         virtual void install (void);
@@ -53,8 +53,8 @@ class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OM3MediaWidgetTexturePlugin : publ
         virtual const SupportedExtensions& getSupportedExtensions (void) const;
 
     protected:
-        // Returns true if the extension is a supported texture
-        bool OM3MediaWidgetTexturePlugin::isSupportedTexture (const std::string& extension);
+        // Returns true if the extension is a supported image
+        bool OM3MediaWidgetImagePlugin::isSupportedImage (const std::string& extension);
 
         // Returns the filename of the icon, based on the extension
         const QString& getFallbackIcon (const std::string& extension) const;
@@ -66,28 +66,28 @@ class MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT OM3MediaWidgetTexturePlugin : publ
         AssetsDockWidget* mAssetsDockWidget;
         SupportedExtensions mSupportedExtensions;
         FallbackIcons mFallbackIcons;
-        SupportedExtensions mSupportedTextures;
+        SupportedExtensions mSupportedImages;
         QString mDummyQString;
 };
 
-static OM3MediaWidgetTexturePlugin* plugin;
+static OM3MediaWidgetImagePlugin* plugin;
 
 /****************************************************************************
  Provide external access by the OM3 application:
- The function 'createPlugin' creates a static instance of OM3MediaWidgetTexturePlugin
+ The function 'createPlugin' creates a static instance of OM3MediaWidgetImagePlugin
  and returns it's pointer
  ***************************************************************************/
-extern "C" MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
+extern "C" MEDIAWIDGET_IMAGE_PLUGINSHARED_EXPORT PluginInterface* createPlugin (AssetsDockWidget* assetsDockWidget)
 {
-    plugin = new OM3MediaWidgetTexturePlugin(assetsDockWidget);
+    plugin = new OM3MediaWidgetImagePlugin(assetsDockWidget);
     return plugin;
 }
 
 /****************************************************************************
  Provide external access by the OM3 application:
- The function 'deletePlugin' deletes the static instance of OM3MediaWidgetTexturePlugin
+ The function 'deletePlugin' deletes the static instance of OM3MediaWidgetImagePlugin
  ***************************************************************************/
-extern "C" MEDIAWIDGET_TEXTURE_PLUGINSHARED_EXPORT void deletePlugin (void)
+extern "C" MEDIAWIDGET_IMAGE_PLUGINSHARED_EXPORT void deletePlugin (void)
 {
     delete plugin;
 }

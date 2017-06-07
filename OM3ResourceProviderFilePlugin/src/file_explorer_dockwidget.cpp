@@ -145,6 +145,7 @@ void FileExplorerDockWidget::addDirectory (void)
                 assetMetaData.path = path.toStdString();
                 assetMetaData.baseNameOrReference = fileName.toStdString();
                 assetMetaData.fullQualifiedFileNameOrReference = fullQualifiedFileNameOrReference.toStdString();
+                assetMetaData.fullQualifiedFileNameImport = assetMetaData.fullQualifiedFileNameOrReference;
                 assetMetaData.tags.push_back("test");
                 assetMetaData.extension = info.suffix().toStdString();
                 time_t rawTime = info.created().toTime_t();

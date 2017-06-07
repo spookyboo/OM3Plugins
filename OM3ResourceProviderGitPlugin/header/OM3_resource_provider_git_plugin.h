@@ -47,7 +47,7 @@ class RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT OM3ResourceProviderGitPlugin : p
         virtual void shutdown (void);
         virtual void uninstall (void);
         virtual void resetWindowLayout (void);
-        virtual MediaWidget* addResource (const AssetMetaData& assetMetaData);
+        virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData);
 
     private:
         AssetsDockWidget* mAssetsDockWidget;

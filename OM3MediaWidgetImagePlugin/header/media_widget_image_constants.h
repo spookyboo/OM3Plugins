@@ -16,13 +16,13 @@
 **
 ****************************************************************************/
 
-#ifndef MEDIAWIDGET_TEXTURE_CONSTANTS_H
-#define MEDIAWIDGET_TEXTURE_CONSTANTS_H
+#ifndef MEDIAWIDGET_IMAGE_CONSTANTS_H
+#define MEDIAWIDGET_IMAGE_CONSTANTS_H
 
 #include <QString>
 
 //************************************ Misc *******************************************/
-static const QString PLUGIN_NAME = QString("OM3MediaWidgetTexturePlugin");
+static const QString PLUGIN_NAME = QString("OM3MediaWidgetImagePlugin");
 
 //************************************ Icons *******************************************/
 static const QString PLUGIN_ICON_PATH = QString("../common/icons/");

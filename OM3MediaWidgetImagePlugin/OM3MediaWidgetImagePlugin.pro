@@ -1,11 +1,11 @@
 QT       += widgets opengl multimedia
 OM3HOME = "../../OM3"
 
-TARGET = OM3MediaWidgetTexturePlugin
+TARGET = OM3MediaWidgetImagePlugin
 TEMPLATE = lib
 
 # Used in defining __declspec export/import
-DEFINES += OM3_MEDIAWIDGET_TEXTURE_PLUGIN_LIBRARY
+DEFINES += OM3_MEDIAWIDGET_IMAGE_PLUGIN_LIBRARY
 
 # The following define makes your compiler emit warnings if you use
 # any feature of Qt which as been marked as deprecated (the exact warnings
@@ -20,16 +20,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES +=\
-    src/media_texture_widget.cpp \
-    src/OM3_media_widget_texture_plugin.cpp
+    src/media_image_widget.cpp \
+    src/OM3_media_widget_image_plugin.cpp
 
 HEADERS +=\
-    header/media_widget_texture_constants.h \
-    header/media_texture_widget.h \
-    header/OM3_media_widget_texture_plugin.h
+    header/media_image_widget.h \
+    header/media_widget_image_constants.h \
+    header/OM3_media_widget_image_plugin.h
 
 INCLUDEPATH +=\
-    "../OM3MediaWidgetTexturePlugin/header/" \
+    "../OM3MediaWidgetImagePlugin/header/" \
     "$$OM3HOME/source/header"
 
 Debug:LIBS += -L"$$OM3HOME/bin"
@@ -38,7 +38,7 @@ Release:LIBS += -L"$$OM3HOME/bin"
 
 CONFIG(debug, debug|release):LIBS +=\
         -lOM3
-        -lOM3MediaWidgetTexturePlugin
+        -lOM3MediaWidgetImagePlugin
 
 CONFIG(release, debug|release):LIBS +=\
         -lOM3

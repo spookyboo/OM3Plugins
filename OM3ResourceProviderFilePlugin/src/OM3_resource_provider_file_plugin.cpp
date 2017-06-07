@@ -54,7 +54,7 @@ const std::string& OM3ResourceProviderFilePlugin::getName (void) const
 //****************************************************************************/
 void OM3ResourceProviderFilePlugin::install (void)
 {
-    mAssetsDockWidget->addWidget(mMainWidget, PLUGIN_ICON_PATH + PLUGIN_ICON_FOLDER, "Filesystem");
+    mAssetsDockWidget->addResourceProviderWidget(mMainWidget, PLUGIN_ICON_PATH + PLUGIN_ICON_FOLDER, "Filesystem");
 }
 
 //****************************************************************************/
@@ -82,7 +82,7 @@ void OM3ResourceProviderFilePlugin::resetWindowLayout (void)
 }
 
 //****************************************************************************/
-MediaWidget* OM3ResourceProviderFilePlugin::addResource (const AssetMetaData& assetMetaData)
+MediaWidget* OM3ResourceProviderFilePlugin::createMediaWidget (const AssetMetaData& assetMetaData)
 {
     return mAssetsDockWidget->createMediaWidget(assetMetaData);
 }
