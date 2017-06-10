@@ -49,7 +49,7 @@ class MEDIAWIDGET_IMAGE_PLUGINSHARED_EXPORT OM3MediaWidgetImagePlugin : public P
         virtual void shutdown (void);
         virtual void uninstall (void);
         virtual void resetWindowLayout (void) {}
-        virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData);
+        virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData, QWidget* parent = 0);
         virtual const SupportedExtensions& getSupportedExtensions (void) const;
 
     protected:

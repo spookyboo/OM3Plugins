@@ -140,7 +140,7 @@ void OM3MediaWidgetImagePlugin::uninstall (void)
 }
 
 //****************************************************************************/
-MediaWidget* OM3MediaWidgetImagePlugin::createMediaWidget (const AssetMetaData& assetMetaData)
+MediaWidget* OM3MediaWidgetImagePlugin::createMediaWidget (const AssetMetaData& assetMetaData, QWidget* parent)
 {
     QSize size(120, 120);
     QPixmap pixmap;

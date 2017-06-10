@@ -33,6 +33,7 @@ QT_END_NAMESPACE
  This class represents a DockWidget
  ***************************************************************************/
 class MediaListWidget;
+class QListWidgetItem;
 class CentralDockWidget : public QDockWidget
 {
 	Q_OBJECT
@@ -53,6 +54,9 @@ class CentralDockWidget : public QDockWidget
         /** Remove all resources belonging to a specific path
          */
         void removeResources (const QString& path);
+
+    protected:
+        void handleSelected(QListWidgetItem* item);
 
     private:
         PluginResourceProviderInterface* mPlugin;

@@ -21,6 +21,7 @@
 #include <QImageReader>
 #include <QHBoxLayout>
 #include <QLineEdit>
+#include <QMessageBox>
 #include "media_image_widget.h"
 
 //****************************************************************************/
@@ -29,11 +30,20 @@ MediaImageWidget::MediaImageWidget (const AssetMetaData& assetMetaData,
                                         QWidget* parent) :
     MediaWidget(assetMetaData, parent)
 {
+    setStyleSheet("background-color: rgba(0,0,0,0)"); // Make it transparent around the edges, so it becomes visible when selected
+    QSize size = QSize(128, 128); // Give it a default size
+    setMinimumSize(size);
+    setMaximumSize(size);
     QLabel* label = new QLabel();
     QHBoxLayout* layout = new QHBoxLayout;
     label->setPixmap(pixmap);
     label->setScaledContents(true);
     layout->addWidget(label);
     setLayout(layout);
-    setMouseTracking(true);
 }
+
+//****************************************************************************/
+//void MediaImageWidget::mousePressEvent (QMouseEvent* e)
+//{
+    //QMessageBox::information(0, "MediaImageWidget::mousePressEvent", "Mouse clicked");
+//}

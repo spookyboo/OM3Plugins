@@ -82,7 +82,7 @@ void OM3ResourceProviderFilePlugin::resetWindowLayout (void)
 }
 
 //****************************************************************************/
-MediaWidget* OM3ResourceProviderFilePlugin::createMediaWidget (const AssetMetaData& assetMetaData)
+MediaWidget* OM3ResourceProviderFilePlugin::createMediaWidget (const AssetMetaData& assetMetaData, QWidget* parent)
 {
-    return mAssetsDockWidget->createMediaWidget(assetMetaData);
+    return mAssetsDockWidget->createMediaWidget(assetMetaData, parent);
 }

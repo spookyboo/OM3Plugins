@@ -49,7 +49,7 @@ class RESOURCE_PROVIDER_FILE_PLUGINSHARED_EXPORT OM3ResourceProviderFilePlugin :
         virtual void shutdown (void);
         virtual void uninstall (void);
         virtual void resetWindowLayout (void);
-        virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData);
+        virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData, QWidget* parent = 0);
 
     private:
         AssetsDockWidget* mAssetsDockWidget;

@@ -28,11 +28,9 @@ CentralDockWidget::CentralDockWidget (const QString& title, QMainWindow* parent,
     QDockWidget (title, parent, flags),
     mPlugin(0)
 {
-    QMainWindow* mInnerMain = new QMainWindow();
     mMediaListWidget = new MediaListWidget ();
-    mInnerMain->setCentralWidget(mMediaListWidget);
-    setWidget(mInnerMain);
-    mMediaListWidget->showMaximized();
+    setWidget(mMediaListWidget);
+    //connect(mMediaListWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(handleSelected(QListWidgetItem*)));
 }
 
 //****************************************************************************/
@@ -49,7 +47,7 @@ void CentralDockWidget::setPlugin (PluginResourceProviderInterface* plugin)
 //****************************************************************************/
 void CentralDockWidget::addResource (const AssetMetaData& assetMetaData)
 {
-    MediaWidget* mediaWidget = mPlugin->createMediaWidget(assetMetaData);
+    MediaWidget* mediaWidget = mPlugin->createMediaWidget(assetMetaData, mMediaListWidget);
     mMediaListWidget->addMediaWidget(mediaWidget);
 }
 
@@ -57,4 +55,10 @@ void CentralDockWidget::addResource (const AssetMetaData& assetMetaData)
 void CentralDockWidget::removeResources (const QString& topLevelPath)
 {
     mMediaListWidget->removeMediaWidgetsByOriginAndTopLevelPath(PLUGIN_NAME, topLevelPath);
+}
+
+//****************************************************************************/
+void CentralDockWidget::handleSelected(QListWidgetItem* item)
+{
+    QMessageBox::information(0, QString("QtDefaultTextureWidget::handleSelected"), QString("Item selected"));
 }

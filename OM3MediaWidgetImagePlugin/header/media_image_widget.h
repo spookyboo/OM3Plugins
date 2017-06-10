@@ -34,6 +34,9 @@ class MediaImageWidget : public MediaWidget
                             const QPixmap& pixmap,
                             QWidget* parent = 0);
         virtual ~MediaImageWidget (void) {}
+
+    //protected:
+        //virtual void mousePressEvent (QMouseEvent* e);
 };
 
 #endif
