@@ -16,25 +16,33 @@
 **
 ****************************************************************************/
 
-#ifndef MEDIA_IMAGE_WIDGET_H
-#define MEDIA_IMAGE_WIDGET_H
+#ifndef FILE_MEDIA_LISTWIDGET_H
+#define FILE_MEDIA_LISTWIDGET_H
 
-#include <QPixmap>
-#include "media_widget.h"
+#include "media_listwidget.h"
 
 /****************************************************************************
-This MediaWidget is used to display image files. In addition it acts as a fallback
-for extensions of wellknown tools / fallback in case no other MediaWidget is
-able to display content
+Sub class of MediaListWidget. Added to prevent nasty linking errors with
+signal/slots if they were implemented in MediaListWidget itself.
 ***************************************************************************/
-class MediaImageWidget : public MediaWidget
+class FileMediaListWidget : public MediaListWidget
 {
+    Q_OBJECT
+
     public:
-        MediaImageWidget (AssetMetaData* assetMetaData,
-                          const QPixmap& pixmap,
-                          QWidget* parent = 0);
-        virtual ~MediaImageWidget (void) {}
-        virtual void delegateActionByText (const std::string& actionText);
+        FileMediaListWidget (QWidget* parent = 0);
+        virtual ~FileMediaListWidget (void);
+
+    protected:
+        virtual void mousePressEvent( QMouseEvent* e );
+
+    protected slots:
+        void handleContextMenuItemSelected(QAction* action);
+
+    signals:
+        /** Emitted when an menu item from the contextmenu is selected
+        */
+        void contextMenuItemSelected (QAction* action);
 };
 
 #endif

@@ -68,16 +68,33 @@ void CentralDockWidget::removeResources (const QString& topLevelPath)
 //****************************************************************************/
 void CentralDockWidget::handleContextMenuItemSelected(QAction* action)
 {
+    QList<QListWidgetItem*> list = mFileMediaListWidget->selectedItems();
+    MediaWidget* widget;
+    QListWidgetItem* item;
     if (action->text() == PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKBENCH)
     {
-        QList<QListWidgetItem*> list = mFileMediaListWidget->selectedItems();
+        /* It was a menu item added by the CentralDockWidget, so handle it
+         */
         if (!list.empty())
         {
-            MediaWidget* widget;
-            foreach (QListWidgetItem* item, list)
+            foreach (item, list)
             {
                 widget = static_cast<MediaWidget*>(mFileMediaListWidget->itemWidget(item));
                 mPlugin->getAssetsDockWidget()->addResourceToWorkbench(widget->getAssetMetaData());
+            }
+        }
+    }
+    else
+    {
+        /* It was not a menu item added by the CentralDockWidget, so it is probably a menu item associated
+         * with a MediaWidget; delegate it
+         */
+        if (!list.empty())
+        {
+            foreach (item, list)
+            {
+                widget = static_cast<MediaWidget*>(mFileMediaListWidget->itemWidget(item));
+                widget->delegateActionByText (action->text().toStdString());
             }
         }
     }

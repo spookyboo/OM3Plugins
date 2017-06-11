@@ -41,8 +41,19 @@ MediaImageWidget::MediaImageWidget (AssetMetaData* assetMetaData,
     layout->addWidget(label);
     setLayout(layout);
 
-    // Set the behaviour properties
-    AssetMetaData::MediaWidgetBehaviour behaviour;
-    behaviour.menuText = "Open with Abobe Photoshop (this is a test)";
-    mAssetMetaData.mediaWidgetBehaviourVec.push_back(behaviour);
+    // Set the action properties
+    AssetMetaData::MediaWidgetAction action;
+    action.actionText = "Open with Abobe Photoshop (this is a test)";
+    mAssetMetaData.mediaWidgetActionVec.push_back(action);
+    action.actionText = "Play video (this is a test)";
+    mAssetMetaData.mediaWidgetActionVec.push_back(action);
+    action.actionText = "Play audio  (this is a test)";
+    mAssetMetaData.mediaWidgetActionVec.push_back(action);
+}
+
+//****************************************************************************/
+void MediaImageWidget::delegateActionByText (const std::string& actionText)
+{
+    // TODO: Perform the action
+    QMessageBox::information(0, "MediaImageWidget::delegateActionByText", "Perform the action of this widget");
 }
