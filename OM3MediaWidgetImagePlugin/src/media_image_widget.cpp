@@ -25,9 +25,9 @@
 #include "media_image_widget.h"
 
 //****************************************************************************/
-MediaImageWidget::MediaImageWidget (const AssetMetaData& assetMetaData,
-                                        const QPixmap& pixmap,
-                                        QWidget* parent) :
+MediaImageWidget::MediaImageWidget (AssetMetaData* assetMetaData,
+                                    const QPixmap& pixmap,
+                                    QWidget* parent) :
     MediaWidget(assetMetaData, parent)
 {
     setStyleSheet("background-color: rgba(0,0,0,0)"); // Make it transparent around the edges, so it becomes visible when selected
@@ -40,10 +40,9 @@ MediaImageWidget::MediaImageWidget (const AssetMetaData& assetMetaData,
     label->setScaledContents(true);
     layout->addWidget(label);
     setLayout(layout);
-}
 
-//****************************************************************************/
-//void MediaImageWidget::mousePressEvent (QMouseEvent* e)
-//{
-    //QMessageBox::information(0, "MediaImageWidget::mousePressEvent", "Mouse clicked");
-//}
+    // Set the behaviour properties
+    AssetMetaData::MediaWidgetBehaviour behaviour;
+    behaviour.menuText = "Open with Abobe Photoshop (this is a test)";
+    mAssetMetaData.mediaWidgetBehaviourVec.push_back(behaviour);
+}

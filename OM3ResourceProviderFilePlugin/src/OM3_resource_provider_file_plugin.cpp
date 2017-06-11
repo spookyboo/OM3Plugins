@@ -23,9 +23,10 @@
 #include <QMessageBox>
 
 //****************************************************************************/
-OM3ResourceProviderFilePlugin::OM3ResourceProviderFilePlugin (AssetsDockWidget* assetsDockWidget) :
-    mAssetsDockWidget(assetsDockWidget)
+OM3ResourceProviderFilePlugin::OM3ResourceProviderFilePlugin (AssetsDockWidget* assetsDockWidget)
 {
+    setAssetsDockWidget(assetsDockWidget);
+
     // Create the main widget that is added to the assetsDockWidget's tab
     mMainWidget = new QWidget();
 
@@ -82,7 +83,13 @@ void OM3ResourceProviderFilePlugin::resetWindowLayout (void)
 }
 
 //****************************************************************************/
-MediaWidget* OM3ResourceProviderFilePlugin::createMediaWidget (const AssetMetaData& assetMetaData, QWidget* parent)
-{
-    return mAssetsDockWidget->createMediaWidget(assetMetaData, parent);
-}
+//MediaWidget* OM3ResourceProviderFilePlugin::createMediaWidget (AssetMetaData* assetMetaData, QWidget* parent)
+//{
+    //return mAssetsDockWidget->createMediaWidget(assetMetaData, parent);
+//}
+
+//****************************************************************************/
+//void OM3ResourceProviderFilePlugin::addResourceToWorkbench (AssetMetaData* assetMetaData)
+//{
+    //return mAssetsDockWidget->addResourceToWorkbench(assetMetaData);
+//}

@@ -30,13 +30,10 @@ able to display content
 class MediaImageWidget : public MediaWidget
 {
     public:
-        MediaImageWidget (const AssetMetaData& assetMetaData,
-                            const QPixmap& pixmap,
-                            QWidget* parent = 0);
+        MediaImageWidget (AssetMetaData* assetMetaData,
+                          const QPixmap& pixmap,
+                          QWidget* parent = 0);
         virtual ~MediaImageWidget (void) {}
-
-    //protected:
-        //virtual void mousePressEvent (QMouseEvent* e);
 };
 
 #endif

@@ -30,13 +30,15 @@ SOURCES +=\
     "$$OM3HOME/source/src/media_listwidget.cpp" \
     src/central_dockwidget.cpp \
     src/file_explorer_dockwidget.cpp \
-    src/OM3_resource_provider_file_plugin.cpp
+    src/OM3_resource_provider_file_plugin.cpp \
+    src/file_media_listwidget.cpp
 
 HEADERS +=\
     header/central_dockwidget.h \
     header/file_explorer_dockwidget.h \
     header/resource_provider_file_constants.h \
-    header/OM3_resource_provider_file_plugin.h
+    header/OM3_resource_provider_file_plugin.h \
+    header/file_media_listwidget.h
 
 INCLUDEPATH +=\
     "../OM3ResourceProviderFilePlugin/header/" \

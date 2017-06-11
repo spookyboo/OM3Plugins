@@ -20,17 +20,24 @@
 #include <QMessageBox>
 #include "resource_provider_file_constants.h"
 #include "central_dockwidget.h"
-#include "media_listwidget.h"
+#include "file_media_listwidget.h"
 #include "media_widget.h"
+#include "assets_dockwidget.h"
 
 //****************************************************************************/
 CentralDockWidget::CentralDockWidget (const QString& title, QMainWindow* parent, Qt::WindowFlags flags) :
     QDockWidget (title, parent, flags),
     mPlugin(0)
 {
-    mMediaListWidget = new MediaListWidget ();
-    setWidget(mMediaListWidget);
-    //connect(mMediaListWidget, SIGNAL(itemClicked(QListWidgetItem*)), this, SLOT(handleSelected(QListWidgetItem*)));
+    QFile File(QString("dark.qss"));
+    File.open(QFile::ReadOnly);
+    QString styleSheet = QLatin1String(File.readAll());
+    setStyleSheet(styleSheet);
+
+    mFileMediaListWidget = new FileMediaListWidget ();
+    mFileMediaListWidget->addContextMenuItem (PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKBENCH, FileMediaListWidget::CONTEXT_MEDIA_ITEMS_SELECTED);
+    setWidget(mFileMediaListWidget);
+    connect(mFileMediaListWidget, SIGNAL(contextMenuItemSelected(QAction*)), this, SLOT(handleContextMenuItemSelected(QAction*)));
 }
 
 //****************************************************************************/
@@ -45,20 +52,33 @@ void CentralDockWidget::setPlugin (PluginResourceProviderInterface* plugin)
 }
 
 //****************************************************************************/
-void CentralDockWidget::addResource (const AssetMetaData& assetMetaData)
+void CentralDockWidget::addResource (AssetMetaData* assetMetaData)
 {
-    MediaWidget* mediaWidget = mPlugin->createMediaWidget(assetMetaData, mMediaListWidget);
-    mMediaListWidget->addMediaWidget(mediaWidget);
+    //MediaWidget* mediaWidget = mPlugin->createMediaWidget(assetMetaData, mFileMediaListWidget);
+    MediaWidget* mediaWidget = mPlugin->getAssetsDockWidget()->createMediaWidget(assetMetaData, mFileMediaListWidget);
+    mFileMediaListWidget->addMediaWidget(mediaWidget);
 }
 
 //****************************************************************************/
 void CentralDockWidget::removeResources (const QString& topLevelPath)
 {
-    mMediaListWidget->removeMediaWidgetsByOriginAndTopLevelPath(PLUGIN_NAME, topLevelPath);
+    mFileMediaListWidget->removeMediaWidgetsByOriginAndTopLevelPath(PLUGIN_NAME, topLevelPath);
 }
 
 //****************************************************************************/
-void CentralDockWidget::handleSelected(QListWidgetItem* item)
+void CentralDockWidget::handleContextMenuItemSelected(QAction* action)
 {
-    QMessageBox::information(0, QString("QtDefaultTextureWidget::handleSelected"), QString("Item selected"));
+    if (action->text() == PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKBENCH)
+    {
+        QList<QListWidgetItem*> list = mFileMediaListWidget->selectedItems();
+        if (!list.empty())
+        {
+            MediaWidget* widget;
+            foreach (QListWidgetItem* item, list)
+            {
+                widget = static_cast<MediaWidget*>(mFileMediaListWidget->itemWidget(item));
+                mPlugin->getAssetsDockWidget()->addResourceToWorkbench(widget->getAssetMetaData());
+            }
+        }
+    }
 }

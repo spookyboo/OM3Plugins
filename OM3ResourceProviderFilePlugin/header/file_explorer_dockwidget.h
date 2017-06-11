@@ -38,7 +38,7 @@ class FileExplorerDockWidget : public QDockWidget
 {
 	Q_OBJECT
 
-	public:
+    public:
         FileExplorerDockWidget(const QString& title, QMainWindow* parent, Qt::WindowFlags flags = 0);
         ~FileExplorerDockWidget(void);
 

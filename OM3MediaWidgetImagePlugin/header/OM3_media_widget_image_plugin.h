@@ -43,13 +43,14 @@ class MEDIAWIDGET_IMAGE_PLUGINSHARED_EXPORT OM3MediaWidgetImagePlugin : public P
         OM3MediaWidgetImagePlugin (AssetsDockWidget* assetsDockWidget);
         virtual ~OM3MediaWidgetImagePlugin (void) {}
 
+        // Mandatory functions
         virtual const std::string& getName (void) const;
         virtual void install (void);
         virtual void initialise (void);
         virtual void shutdown (void);
         virtual void uninstall (void);
         virtual void resetWindowLayout (void) {}
-        virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData, QWidget* parent = 0);
+        virtual MediaWidget* createMediaWidget (AssetMetaData* assetMetaData, QWidget* parent = 0);
         virtual const SupportedExtensions& getSupportedExtensions (void) const;
 
     protected:
@@ -63,7 +64,6 @@ class MEDIAWIDGET_IMAGE_PLUGINSHARED_EXPORT OM3MediaWidgetImagePlugin : public P
         bool fileExist(const QString& fileName);
 
     private:
-        AssetsDockWidget* mAssetsDockWidget;
         SupportedExtensions mSupportedExtensions;
         FallbackIcons mFallbackIcons;
         SupportedExtensions mSupportedImages;

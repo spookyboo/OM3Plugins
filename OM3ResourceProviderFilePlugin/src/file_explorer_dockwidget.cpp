@@ -156,7 +156,7 @@ void FileExplorerDockWidget::addDirectory (void)
 
                 // TODO: Other properties
 
-                mCentralDockWidget->addResource(assetMetaData);
+                mCentralDockWidget->addResource(&assetMetaData);
             }
         }
 

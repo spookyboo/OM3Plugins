@@ -28,9 +28,9 @@
 #include "OM3_media_widget_image_plugin.h"
 
 //****************************************************************************/
-OM3MediaWidgetImagePlugin::OM3MediaWidgetImagePlugin (AssetsDockWidget* assetsDockWidget) :
-    mAssetsDockWidget(assetsDockWidget)
+OM3MediaWidgetImagePlugin::OM3MediaWidgetImagePlugin (AssetsDockWidget* assetsDockWidget)
 {
+    setAssetsDockWidget(assetsDockWidget);
     mDummyQString = QString("");
 
     // Define which IMAGES are supported by this plugin; add them also to the supported extensions vector
@@ -140,20 +140,20 @@ void OM3MediaWidgetImagePlugin::uninstall (void)
 }
 
 //****************************************************************************/
-MediaWidget* OM3MediaWidgetImagePlugin::createMediaWidget (const AssetMetaData& assetMetaData, QWidget* parent)
+MediaWidget* OM3MediaWidgetImagePlugin::createMediaWidget (AssetMetaData* assetMetaData, QWidget* parent)
 {
     QSize size(120, 120);
     QPixmap pixmap;
     QImage image;
-    if (isSupportedImage (assetMetaData.extension))
+    if (isSupportedImage (assetMetaData->extension))
     {
         // The extension refers to a image, supported by this plugin, so display the image
-        if (fileExist(assetMetaData.fullQualifiedFileNameImport.c_str()))
+        if (fileExist(assetMetaData->fullQualifiedFileNameImport.c_str()))
         {
             try
             {
                 // Decrease the image, otherwise it cannot be loaded by the pixmap
-                QImageReader reader(assetMetaData.fullQualifiedFileNameImport.c_str());
+                QImageReader reader(assetMetaData->fullQualifiedFileNameImport.c_str());
                 reader.setScaledSize(size); // Prevents from reading to much data in memory
                 image = reader.read();
                 pixmap.convertFromImage(image);
@@ -171,7 +171,7 @@ MediaWidget* OM3MediaWidgetImagePlugin::createMediaWidget (const AssetMetaData& 
     else
     {
         // It is a non-image or an unsupported image, so try to use a fallback icon
-        QString fileNameIcon = getFallbackIcon (assetMetaData.extension);
+        QString fileNameIcon = getFallbackIcon (assetMetaData->extension);
         if (fileNameIcon == "")
         {
             // It is not supported at all, so use a default

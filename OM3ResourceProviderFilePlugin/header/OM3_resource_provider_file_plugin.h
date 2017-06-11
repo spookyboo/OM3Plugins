@@ -43,16 +43,15 @@ class RESOURCE_PROVIDER_FILE_PLUGINSHARED_EXPORT OM3ResourceProviderFilePlugin :
         OM3ResourceProviderFilePlugin (AssetsDockWidget* assetsDockWidget);
         virtual ~OM3ResourceProviderFilePlugin (void) {}
 
+        // Mandatory functions
         virtual const std::string& getName (void) const;
         virtual void install (void);
         virtual void initialise (void);
         virtual void shutdown (void);
         virtual void uninstall (void);
         virtual void resetWindowLayout (void);
-        virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData, QWidget* parent = 0);
 
     private:
-        AssetsDockWidget* mAssetsDockWidget;
         QWidget* mMainWidget;
         QMainWindow* mInnerMain;
         CentralDockWidget* mCentralDockWidget;

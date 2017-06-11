@@ -32,8 +32,7 @@ QT_END_NAMESPACE
 /****************************************************************************
  This class represents a DockWidget
  ***************************************************************************/
-class MediaListWidget;
-class QListWidgetItem;
+class FileMediaListWidget;
 class CentralDockWidget : public QDockWidget
 {
 	Q_OBJECT
@@ -49,18 +48,18 @@ class CentralDockWidget : public QDockWidget
         /** Add a resource to this central widget. This results in showing a list of widgets containing
          * an image, video, model, audio, etc.
          */
-        void addResource (const AssetMetaData& assetMetaData);
+        void addResource (AssetMetaData* assetMetaData);
 
         /** Remove all resources belonging to a specific path
          */
         void removeResources (const QString& path);
 
-    protected:
-        void handleSelected(QListWidgetItem* item);
+    protected slots:
+        void handleContextMenuItemSelected(QAction* action);
 
     private:
         PluginResourceProviderInterface* mPlugin;
-        MediaListWidget* mMediaListWidget;
+        FileMediaListWidget* mFileMediaListWidget;
 };
 
 #endif

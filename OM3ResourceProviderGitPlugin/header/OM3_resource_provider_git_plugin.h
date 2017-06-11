@@ -41,16 +41,15 @@ class RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT OM3ResourceProviderGitPlugin : p
         OM3ResourceProviderGitPlugin (AssetsDockWidget* assetsDockWidget);
         virtual ~OM3ResourceProviderGitPlugin (void) {}
 
+        // Mandatory functions
         virtual const std::string& getName (void) const;
         virtual void install (void);
         virtual void initialise (void);
         virtual void shutdown (void);
         virtual void uninstall (void);
         virtual void resetWindowLayout (void);
-        virtual MediaWidget* createMediaWidget (const AssetMetaData& assetMetaData, QWidget* parent = 0);
 
     private:
-        AssetsDockWidget* mAssetsDockWidget;
         QWidget* mMainWidget;
         QMainWindow* mInnerMain;
 };

@@ -29,8 +29,11 @@ static const QString PLUGIN_ICON_PATH = QString("../common/icons/");
 static const QString PLUGIN_ICON_FOLDER = QString("folder.png");
 static const QString PLUGIN_ICON_ASSET_DEFAULT = QString("asset_default.png");
 
-//************************************ Contextmenu actions *******************************************/
+//************************************ Contextmenu directory actions *******************************************/
 static const QString PLUGIN_CONTEXT_MENU_ACTION_ADD_DIR = QString("Add directory");
 static const QString PLUGIN_CONTEXT_MENU_ACTION_REMOVE_DIR = QString("Remove directory");
+
+//************************************ Contextmenu media widget actions *******************************************/
+static const QString PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKBENCH = QString("Add selected resource(s) to the workbench");
 
 #endif
