@@ -22,6 +22,7 @@
 #include <QHBoxLayout>
 #include <QLineEdit>
 #include <QMessageBox>
+#include <algorithm>
 #include "assets_dockwidget.h"
 #include "media_widget_image_constants.h"
 #include "media_image_widget.h"
@@ -145,15 +146,19 @@ MediaWidget* OM3MediaWidgetImagePlugin::createMediaWidget (AssetMetaData* assetM
     QSize size(120, 120);
     QPixmap pixmap;
     QImage image;
-    if (isSupportedImage (assetMetaData->extension))
+    if (isSupportedImage (assetMetaData->extensionOrMimeType))
     {
-        // The extension refers to a image, supported by this plugin, so display the image
-        if (fileExist(assetMetaData->fullQualifiedFileNameImport.c_str()))
+        if (assetMetaData->fullQualifiedFileNamePulled == "" || !fileExist(assetMetaData->fullQualifiedFileNamePulled.c_str()))
+        {
+            // TODO: Try to retrieve it first from the resource provider
+        }
+
+        if (assetMetaData->fullQualifiedFileNamePulled != "" && fileExist(assetMetaData->fullQualifiedFileNamePulled.c_str()))
         {
             try
             {
                 // Decrease the image, otherwise it cannot be loaded by the pixmap
-                QImageReader reader(assetMetaData->fullQualifiedFileNameImport.c_str());
+                QImageReader reader(assetMetaData->fullQualifiedFileNamePulled.c_str());
                 reader.setScaledSize(size); // Prevents from reading to much data in memory
                 image = reader.read();
                 pixmap.convertFromImage(image);
@@ -171,7 +176,7 @@ MediaWidget* OM3MediaWidgetImagePlugin::createMediaWidget (AssetMetaData* assetM
     else
     {
         // It is a non-image or an unsupported image, so try to use a fallback icon
-        QString fileNameIcon = getFallbackIcon (assetMetaData->extension);
+        QString fileNameIcon = getFallbackIcon (assetMetaData->extensionOrMimeType);
         if (fileNameIcon == "")
         {
             // It is not supported at all, so use a default
@@ -210,11 +215,13 @@ const QString& OM3MediaWidgetImagePlugin::getFallbackIcon (const std::string& ex
 //****************************************************************************/
 bool OM3MediaWidgetImagePlugin::isSupportedImage (const std::string& extension)
 {
+    std::string nonConstextension = extension;
+    std::transform(nonConstextension.begin(), nonConstextension.end(), nonConstextension.begin(), ::tolower);
     SupportedExtensions::iterator it = mSupportedImages.begin();
     SupportedExtensions::iterator itEnd = mSupportedImages.end();
     while (it != itEnd)
     {
-        if (extension == *it)
+        if (nonConstextension == *it)
             return true;
 
         ++it;

@@ -89,7 +89,7 @@ void OM3ResourceProviderFilePlugin::resetWindowLayout (void)
 //}
 
 //****************************************************************************/
-//void OM3ResourceProviderFilePlugin::addResourceToWorkbench (AssetMetaData* assetMetaData)
+//void OM3ResourceProviderFilePlugin::addResourceToWorkspace (AssetMetaData* assetMetaData)
 //{
-    //return mAssetsDockWidget->addResourceToWorkbench(assetMetaData);
+    //return mAssetsDockWidget->addResourceToWorkspace(assetMetaData);
 //}

@@ -52,8 +52,11 @@ MediaImageWidget::MediaImageWidget (AssetMetaData* assetMetaData,
 }
 
 //****************************************************************************/
-void MediaImageWidget::delegateActionByText (const std::string& actionText)
+void MediaImageWidget::delegateActionByText (const QString& actionText)
 {
     // TODO: Perform the action
     QMessageBox::information(0, "MediaImageWidget::delegateActionByText", "Perform the action of this widget");
 }
+
+
+

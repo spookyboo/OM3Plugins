@@ -34,6 +34,9 @@ static const QString PLUGIN_CONTEXT_MENU_ACTION_ADD_DIR = QString("Add directory
 static const QString PLUGIN_CONTEXT_MENU_ACTION_REMOVE_DIR = QString("Remove directory");
 
 //************************************ Contextmenu media widget actions *******************************************/
-static const QString PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKBENCH = QString("Add selected resource(s) to the workbench");
+static const QString PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKSPACE = QString("Add selected resource(s) to the workspace");
+
+//************************************ Warning, info and error texts *******************************************/
+static const QString PLUGIN_INFO_TEXT_ASSET_ADDED_TO_WS = QString("asset(s) added to the workspace");
 
 #endif

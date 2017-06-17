@@ -35,7 +35,7 @@ CentralDockWidget::CentralDockWidget (const QString& title, QMainWindow* parent,
     setStyleSheet(styleSheet);
 
     mFileMediaListWidget = new FileMediaListWidget ();
-    mFileMediaListWidget->addContextMenuItem (PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKBENCH, FileMediaListWidget::CONTEXT_MEDIA_ITEMS_SELECTED);
+    mFileMediaListWidget->addContextMenuItem (PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKSPACE, FileMediaListWidget::CONTEXT_MEDIA_ITEMS_SELECTED);
     setWidget(mFileMediaListWidget);
     connect(mFileMediaListWidget, SIGNAL(contextMenuItemSelected(QAction*)), this, SLOT(handleContextMenuItemSelected(QAction*)));
 }
@@ -71,7 +71,7 @@ void CentralDockWidget::handleContextMenuItemSelected(QAction* action)
     QList<QListWidgetItem*> list = mFileMediaListWidget->selectedItems();
     MediaWidget* widget;
     QListWidgetItem* item;
-    if (action->text() == PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKBENCH)
+    if (action->text() == PLUGIN_CONTEXT_MENU_ACTION_ADD_TO_WORKSPACE)
     {
         /* It was a menu item added by the CentralDockWidget, so handle it
          */
@@ -80,8 +80,9 @@ void CentralDockWidget::handleContextMenuItemSelected(QAction* action)
             foreach (item, list)
             {
                 widget = static_cast<MediaWidget*>(mFileMediaListWidget->itemWidget(item));
-                mPlugin->getAssetsDockWidget()->addResourceToWorkbench(widget->getAssetMetaData());
+                mPlugin->getAssetsDockWidget()->addResourceToWorkspace(widget->getAssetMetaData());
             }
+            QMessageBox::information(0, "Info", QVariant(list.size()).toString() + " " + PLUGIN_INFO_TEXT_ASSET_ADDED_TO_WS);
         }
     }
     else
@@ -94,7 +95,7 @@ void CentralDockWidget::handleContextMenuItemSelected(QAction* action)
             foreach (item, list)
             {
                 widget = static_cast<MediaWidget*>(mFileMediaListWidget->itemWidget(item));
-                widget->delegateActionByText (action->text().toStdString());
+                widget->delegateActionByText (action->text());
             }
         }
     }

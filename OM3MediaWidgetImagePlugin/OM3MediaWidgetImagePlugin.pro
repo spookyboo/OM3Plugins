@@ -20,6 +20,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES +=\
+    "$$OM3HOME/source/src/media_widget.cpp" \
     src/media_image_widget.cpp \
     src/OM3_media_widget_image_plugin.cpp
 

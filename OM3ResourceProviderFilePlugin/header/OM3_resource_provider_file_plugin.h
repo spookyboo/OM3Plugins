@@ -50,6 +50,8 @@ class RESOURCE_PROVIDER_FILE_PLUGINSHARED_EXPORT OM3ResourceProviderFilePlugin :
         virtual void shutdown (void);
         virtual void uninstall (void);
         virtual void resetWindowLayout (void);
+        virtual bool pull (AssetMetaData* assetMetaData) {return true;} // TODO
+        virtual bool push (AssetMetaData* assetMetaData) {return true;} // TODO
 
     private:
         QWidget* mMainWidget;

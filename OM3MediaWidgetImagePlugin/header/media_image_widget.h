@@ -34,7 +34,10 @@ class MediaImageWidget : public MediaWidget
                           const QPixmap& pixmap,
                           QWidget* parent = 0);
         virtual ~MediaImageWidget (void) {}
-        virtual void delegateActionByText (const std::string& actionText);
+
+        /** @see MediaWidget
+          */
+        virtual void delegateActionByText (const QString& actionText);
 };
 
 #endif

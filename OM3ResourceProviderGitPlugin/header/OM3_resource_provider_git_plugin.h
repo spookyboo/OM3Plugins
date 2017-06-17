@@ -48,6 +48,8 @@ class RESOURCE_PROVIDER_GIT_PLUGINSHARED_EXPORT OM3ResourceProviderGitPlugin : p
         virtual void shutdown (void);
         virtual void uninstall (void);
         virtual void resetWindowLayout (void);
+        virtual bool pull (AssetMetaData* assetMetaData) {return true;} // TODO
+        virtual bool push (AssetMetaData* assetMetaData) {return true;} // TODO
 
     private:
         QWidget* mMainWidget;
