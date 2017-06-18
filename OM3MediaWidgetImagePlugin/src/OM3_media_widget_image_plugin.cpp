@@ -148,17 +148,17 @@ MediaWidget* OM3MediaWidgetImagePlugin::createMediaWidget (AssetMetaData* assetM
     QImage image;
     if (isSupportedImage (assetMetaData->extensionOrMimeType))
     {
-        if (assetMetaData->fullQualifiedFileNamePulled == "" || !fileExist(assetMetaData->fullQualifiedFileNamePulled.c_str()))
+        if (assetMetaData->fullQualifiedFileNameCopied == "" || !fileExist(assetMetaData->fullQualifiedFileNameCopied.c_str()))
         {
             // TODO: Try to retrieve it first from the resource provider
         }
 
-        if (assetMetaData->fullQualifiedFileNamePulled != "" && fileExist(assetMetaData->fullQualifiedFileNamePulled.c_str()))
+        if (assetMetaData->fullQualifiedFileNameCopied != "" && fileExist(assetMetaData->fullQualifiedFileNameCopied.c_str()))
         {
             try
             {
                 // Decrease the image, otherwise it cannot be loaded by the pixmap
-                QImageReader reader(assetMetaData->fullQualifiedFileNamePulled.c_str());
+                QImageReader reader(assetMetaData->fullQualifiedFileNameCopied.c_str());
                 reader.setScaledSize(size); // Prevents from reading to much data in memory
                 image = reader.read();
                 pixmap.convertFromImage(image);

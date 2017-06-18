@@ -145,7 +145,8 @@ void FileExplorerDockWidget::addDirectory (void)
                 assetMetaData.path = path.toStdString();
                 assetMetaData.baseNameOrReference = fileName.toStdString();
                 assetMetaData.fullQualifiedFileNameOrReference = fullQualifiedFileNameOrReference.toStdString();
-                assetMetaData.fullQualifiedFileNamePulled = assetMetaData.fullQualifiedFileNameOrReference; // TODO: Need to copy first?
+                assetMetaData.fullQualifiedFileNameCopied = assetMetaData.fullQualifiedFileNameOrReference;
+                assetMetaData.fullQualifiedFileNamePulled = "";
                 assetMetaData.extensionOrMimeType = info.suffix().toStdString();
                 time_t rawTime = info.created().toTime_t();
                 assetMetaData.dateTimeAssetCreation = *gmtime(&rawTime);

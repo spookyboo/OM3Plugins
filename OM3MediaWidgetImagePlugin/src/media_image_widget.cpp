@@ -19,7 +19,7 @@
 #include <QLabel>
 #include <QPixmap>
 #include <QImageReader>
-#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include <QLineEdit>
 #include <QMessageBox>
 #include "media_image_widget.h"
@@ -35,11 +35,15 @@ MediaImageWidget::MediaImageWidget (AssetMetaData* assetMetaData,
     setMinimumSize(size);
     setMaximumSize(size);
     QLabel* label = new QLabel();
-    QHBoxLayout* layout = new QHBoxLayout;
-    label->setPixmap(pixmap);
-    label->setScaledContents(true);
-    layout->addWidget(label);
+    QLabel* pix = new QLabel();
+    QVBoxLayout* layout = new QVBoxLayout;
+    label->setText(assetMetaData->baseNameOrReference.c_str());
+    pix->setPixmap(pixmap);
+    pix->setScaledContents(true);
+    layout->addWidget(label, 1);
+    layout->addWidget(pix, 1000);
     setLayout(layout);
+    setToolTip(assetMetaData->fullQualifiedFileNameOrReference.c_str());
 
     // Set the action properties
     AssetMetaData::MediaWidgetAction action;
