@@ -54,7 +54,6 @@ void CentralDockWidget::setPlugin (PluginResourceProviderInterface* plugin)
 //****************************************************************************/
 void CentralDockWidget::addResource (AssetMetaData* assetMetaData)
 {
-    //MediaWidget* mediaWidget = mPlugin->createMediaWidget(assetMetaData, mFileMediaListWidget);
     MediaWidget* mediaWidget = mPlugin->getAssetsDockWidget()->createMediaWidget(assetMetaData, mFileMediaListWidget);
     mFileMediaListWidget->addMediaWidget(mediaWidget);
 }

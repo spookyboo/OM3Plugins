@@ -108,6 +108,10 @@ OM3MediaWidgetImagePlugin::OM3MediaWidgetImagePlugin (AssetsDockWidget* assetsDo
     mSupportedExtensions.push_back("ttf");
     mFallbackIcons["ttf"] = PLUGIN_ICON_PATH + PLUGIN_ICON_FONT_DEFAULT;
 
+    // Webpages
+    mSupportedExtensions.push_back("text/html"); // Use mimetype instead of file extension to support generic html pages
+    mFallbackIcons["text/html"] = PLUGIN_ICON_PATH + PLUGIN_ICON_WEBPAGE;
+
     // Non-media formats (sometimes used for media though)
     mSupportedExtensions.push_back("zip");
     mFallbackIcons["zip"] = PLUGIN_ICON_PATH + PLUGIN_ICON_ZIP;

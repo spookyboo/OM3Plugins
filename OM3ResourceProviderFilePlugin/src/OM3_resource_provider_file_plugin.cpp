@@ -82,14 +82,4 @@ void OM3ResourceProviderFilePlugin::resetWindowLayout (void)
     mInnerMain->addDockWidget(Qt::RightDockWidgetArea, mFileExplorerDockWidget);
 }
 
-//****************************************************************************/
-//MediaWidget* OM3ResourceProviderFilePlugin::createMediaWidget (AssetMetaData* assetMetaData, QWidget* parent)
-//{
-    //return mAssetsDockWidget->createMediaWidget(assetMetaData, parent);
-//}
 
-//****************************************************************************/
-//void OM3ResourceProviderFilePlugin::addResourceToWorkspace (AssetMetaData* assetMetaData)
-//{
-    //return mAssetsDockWidget->addResourceToWorkspace(assetMetaData);
-//}

@@ -42,5 +42,6 @@ static const QString PLUGIN_ICON_3D_MODEL_OBJ = QString("icon_3dmodel_obj.png");
 static const QString PLUGIN_ICON_3D_MODEL_BLEND = QString("icon_3dmodel_blend.png");
 static const QString PLUGIN_ICON_ZIP = QString("icon_zip.png");
 static const QString PLUGIN_ICON_7ZIP = QString("icon_7zip.png");
+static const QString PLUGIN_ICON_WEBPAGE = QString("icon_webpage.png");
 
 #endif
